@@ -128,8 +128,8 @@ public class Practica1 {
                 positivos+=num1;
             }
         }
-        System.out.println("la media de los numeros positivos es: " +
-        positivos/2 + " la media de los numeros negativos es: " + negativos/2 +
+        System.out.println("la media de los numeros positivos es: \n" +
+        positivos/2 + " la media de los numeros negativos es:\n" + negativos/2 +
         " Hay " + contador_ceros + "ceros.");
     }
 /*Leer 10 números enteros. Debemos mostrarlos en el siguiente orden: el primero,
@@ -231,9 +231,59 @@ otros 3 de la B, etc.*/
             System.out.println(tablaC[i]);
         }
     }
-    
+/*Incluye los 6 ejercicios anteriores en métodos, y realiza un programa
+principal que pida al usuario que método quiere ejecutar y llame a este.*/
+
     public static void main(String[] args) {
         // TODO code application logic here
-        
+        Scanner num = new Scanner(System.in);
+        boolean exit = false;
+        while (exit == false){
+            System.out.println("********************************************");
+            System.out.println("*********************MENU*******************");
+            System.out.println("selecciona una opción:");
+            System.out.println("1.Leer 5 números mostrarlos en el mismo orden\n"
+                    + "introducido");
+            System.out.println("2. Leer 5 números y mostrarlos en inverso\n"
+                    + "al introducido.");
+            System.out.println("3. Realizar la media de números positivos, la\n"
+                    + "media de los negativos y contar el número de ceros");
+            System.out.println("4. Mostrar 10 numeros enteros en el siguiente\n"
+                    + "orden: el primero, el último, el segundo, el penúl...");
+            System.out.println("5. Leer 20 números enteros y cargarlos en dos\n"
+                    + "tablas de 10 y mezclarlos en una tercera de la forma:\n"
+                    + "el 1º de A,el 1º de B, el 2º de A, el 2º de B, etc.");
+            System.out.println("6.Leer dos series de 12 numeros, y mezclarlos\n"
+                    + " en una tercera de la forma: 3 de la tabla A,\n"
+                    + "3 de la B, otros 3 de A, otros 3 de la B, etc.");
+            System.out.println("7. Salir.");
+            int opcion = num.nextInt();
+            switch (opcion){
+                case 7:
+                    exit = true;
+                    break;
+                case 1:
+                    imprimirLista();
+                    break;
+                case 2:
+                    numerosRevertidos();
+                    break;
+                case 3:
+                    calcularMedia();
+                    break;
+                case 4:
+                    mostrarNumeros();
+                    break;
+                case 5:
+                    combinarTablas();
+                    break;
+                case 6:
+                    combinarTablasTres();
+                    break;
+                default:
+                    System.out.println("La opción indicada no es correcta,"
+                            + "por favor, indica otra.");
+            }
+        }
     }
 }
