@@ -22,7 +22,7 @@ public class Practica2 {
     usuario seleccionar el método que desea ejecutar, por tanto, los siguientes
     ejercicios se incluirán en métodos (recuerda que el nombrado del método
     debe ser representativo sobre la función que realiza).
-    Empiezo: 18:50 - 19:00 + 5m + 5m*/
+    Empiezo: 18:50 - 19:00 + 5m + 5m */
     
     public static void mostrarMenu(){
         Scanner num = new Scanner(System.in);
