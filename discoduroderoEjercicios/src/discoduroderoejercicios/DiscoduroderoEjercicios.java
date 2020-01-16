@@ -110,9 +110,45 @@ public class DiscoduroderoEjercicios {
     }
     
     /*7) Lee un número por teclado y muestra por consola, el carácter al que
-    pertenece en la tabla ASCII. Ej: si introduzco un 97, me muestre una a.*/
+    pertenece en la tabla ASCII. Ej: si introduzco un 97, me muestre una a.
+    ayuda en:
+https://www.lawebdelprogramador.com/foros/Java/769306-paso-de-codigo-ascii-a-su-caracter.html*/
     
+    public static void convertirNumeroASCII(){
+        Scanner num = new Scanner (System.in);
+        System.out.println("Dame un valor: ");
+        int entero = num.nextInt();
+        char ascii = (char)entero;
+        
+        System.out.println("el codigo ASCII de este número es " + ascii);
+    }
     
+    /*8) Modifica el ejercicio anterior, para que en lugar de pedir un número,
+    pida un carácter (char) y muestre su código en la tabla ASCII.
+    Empiezo: 20:55 a 21:00
+    ayuda en: https://www.geeksforgeeks.org/gfact-51-java-scanner-nextchar/*/
+    
+    public static void convertirCaracterASCII(){
+        Scanner num = new Scanner (System.in);
+        System.out.println("Dime una letra: ");
+        char caracter = num.next().charAt(0); //metodo para pedir por teclado
+                                               //un dato tipo chart
+        int ascii = (int)caracter;
+        System.out.println("el codigo ASCII de este número es " + ascii);
+    }
+    
+    /*9) Lee un número por teclado que pida el precio de un producto
+    (puede tener decimales) y calcule el precio final con IVA. El IVA sera una
+    constante que sera del 21%.
+    Empiezo: 21:05 a 21:20*/
+    
+    public static void calcularIVA(){
+        final double iva = 0.21;
+        Scanner num =  new Scanner (System.in);
+        System.out.println("Dime un precio: ");
+        float pvp = num.nextFloat();
+        System.out.println("El precio con IVA es: " + (pvp+(pvp*iva)));
+    }
     
     public static void main(String[] args) {
         // TODO code application logic here
@@ -121,6 +157,9 @@ public class DiscoduroderoEjercicios {
         //saludoBienvenida();
         //areaCirculo();
         //divisible2();
+        //convertirNumeroASCII();
+        //convertirCaracterASCII();
+        calcularIVA();
     }
     
 }
