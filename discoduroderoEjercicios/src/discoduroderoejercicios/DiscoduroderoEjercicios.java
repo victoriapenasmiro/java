@@ -238,9 +238,6 @@ https://www.lawebdelprogramador.com/foros/Java/769306-paso-de-codigo-ascii-a-su-
             System.out.println("El discriminante es negativo");
         }
     }
-}
-        
-    }
     
     public static void main(String[] args) {
         // TODO code application logic here
