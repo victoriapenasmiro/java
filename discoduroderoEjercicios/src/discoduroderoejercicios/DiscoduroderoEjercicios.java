@@ -10,6 +10,8 @@ import java.util.Scanner;
 /**
  *
  * @author victoriapenas
+Este listado de ejercicios están publicados en:
+https://www.discoduroderoer.es/ejercicios-propuestos-y-resueltos-basicos-java/
  */
 public class DiscoduroderoEjercicios {
 
@@ -150,6 +152,96 @@ https://www.lawebdelprogramador.com/foros/Java/769306-paso-de-codigo-ascii-a-su-
         System.out.println("El precio con IVA es: " + (pvp+(pvp*iva)));
     }
     
+    /*10) Muestra los números del 1 al 100 (ambos incluidos).
+    Usa un bucle while.
+    Empiezo: 16:10 - 16:12*/
+    
+    public static void mostrar100NumWhile(){
+        int i = 1;
+        while (i<=100){
+            System.out.println(i);
+            i+=1;
+        }
+    }
+    
+    /*11) Haz el mismo ejercicio anterior con un bucle for.
+    Empiezo: 17:40 a 17:41*/
+    
+    public static void mostrar100NumFor(){
+        for (int i=1;i<=100;i++){
+            System.out.println(i);
+        }
+    }
+    
+    /*12) Muestra los números del 1 al 100 (ambos incluidos) divisibles entre
+    2 y 3. Utiliza el bucle que desees.
+    Empiezo a: 19:15-19:20*/
+    
+    public static void divisiblesEntre2y3(){
+        int i=1;
+        System.out.println("Los numeros divisibles entre 2 y 3 dentro"
+                        + "del rango del 1 al 100 son:");
+        while (i<=100){
+            if (i%2==0 && i%3==0){
+                System.out.println(i);
+            }
+            i++;
+        }
+    }
+    
+    /*13) Realiza una aplicación que nos pida un número de ventas a introducir,
+    después nos pedirá tantas ventas por teclado como número de ventas se hayan
+    indicado. Al final mostrara la suma de todas las ventas. Piensa que es lo
+    que se repite y lo que no. Empiezo: 19:25 a 19:35*/
+    
+    public static void introducirVentas(){
+        Scanner num = new Scanner(System.in);
+        double sumatorio=0;
+        System.out.println("Dime el numero de ventas que vas a introducir:");
+        int ventas = num.nextInt();
+        for(int i=0;i<ventas;i++){
+            System.out.println("Dime el importe de la venta " + (i+1) +":");
+            double suma=num.nextDouble();
+            sumatorio+=suma;
+        }
+        System.out.println("el total de ventas asciende a: " + sumatorio);
+    }
+    
+    /*14) Realiza una aplicación que nos calcule una ecuación de segundo grado.
+    Debes pedir las variables a, b y c por teclado y comprobar antes que el
+    discriminante (operación en la raíz cuadrada). Para la raíz cuadrada usa
+    el método sqlrt de Math. Te recomiendo que uses mensajes de traza.
+    Empiezo: 19:35 - 19:55. No lo he realizado yo, no recuerdo como se realizan
+    las ecuaciones de segundo grado y no se como resolverlo técnicamente*/
+    
+    public static void calcularEcuacion(){
+        Scanner var = new Scanner (System.in);
+        System.out.println("Dime el valor de a:");
+        double a=var.nextDouble();
+        System.out.println("Dime el valor de b:");
+        double b=var.nextDouble();
+        System.out.println("Dime el valor de c:");
+        double c=var.nextDouble();
+        double discriminante=Math.pow(b, 2)-(4*a*c);
+  
+        //Mensaje de traza
+        System.out.println(">>"+discriminante);
+  
+        if (discriminante>0){
+            //Tambien se puede hacer por parte si lo ves más facil
+            //recuerda que debes tener en cuenta la prioridad de elementos
+            double x1=((b*(-1))+Math.sqrt(discriminante))/(2*a);
+            double x2=((b*(-1))-Math.sqrt(discriminante))/(2*a);
+            System.out.println("El valor de x1 es "+x1+" y el de x2 es "+x2);
+        }
+        else{
+            System.out.println("El discriminante es negativo");
+        }
+    }
+}
+        
+    }
+    
     public static void main(String[] args) {
         // TODO code application logic here
         //calculosNum();
@@ -159,7 +251,12 @@ https://www.lawebdelprogramador.com/foros/Java/769306-paso-de-codigo-ascii-a-su-
         //divisible2();
         //convertirNumeroASCII();
         //convertirCaracterASCII();
-        calcularIVA();
+        //calcularIVA();
+        //mostrar100NumWhile();
+        //mostrar100NumFor();
+        //divisiblesEntre2y3();
+        //introducirVentas();
+        calcularEcuacion();
     }
     
 }
