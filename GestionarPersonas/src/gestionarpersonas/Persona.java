@@ -25,10 +25,10 @@ public class Persona {
     //constructor con todos los parámetros.
     public Persona(String nombre, String apellido1, String apellido2, int edad, Nif infNif) {
         this.setNombre(nombre);//utilizamos el setter para convertir a mayúsculas
-        this.apellido1 = apellido1;
-        this.apellido2 = apellido2;
-        this.edad = edad;
-        this.infNif = infNif;
+        this.setApellido1(apellido1);
+        this.setApellido2(apellido2);
+        this.setEdad(edad);
+        this.setNif(infNif);
     }
     //constructor vacío
     public Persona() {
@@ -52,7 +52,8 @@ public class Persona {
     }
 
     public void setNombre(String nombre) {
-        this.nombre = nombre.toUpperCase();//para que todos los nombres que reciba los convierta a mayúsculas.
+        this.nombre = nombre.toUpperCase();
+//para que todos los nombres que reciba los convierta a mayúsculas.
     }
 
     public String getApellido1() {
@@ -107,7 +108,6 @@ public class Persona {
         retorno de carro lo recoja un lector y por tanto, el siguiente lector
         que viene lo recoge y ya no pide el ultimo valor*/
         lector.close(); //cierro el recurso de scanner
-        /*cuando */
     }
     
     public void mostrarAtributos(){

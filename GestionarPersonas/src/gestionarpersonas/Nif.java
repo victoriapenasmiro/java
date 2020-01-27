@@ -12,12 +12,16 @@ import java.util.Scanner;
  * @author victoriapenas
  */
 public class Nif {
+    
+    //atributos
     private String nif;
     private String direccion;
     private String nombreMadre;
     private String nombrePadre;
 
-    public Nif(String nif, String direccion, String nombreMadre, String nombrePadre) {
+    //constructores
+    public Nif(String nif, String direccion, String nombreMadre,
+            String nombrePadre) {
         this.setNif(nif);
         this.setDireccion(direccion);
         this.setNombreMadre(nombreMadre);
@@ -26,8 +30,16 @@ public class Nif {
 
     public Nif() {
     }
-  
-
+    
+    public Nif(Nif nif1) {
+        //utilizo los setter i getters para utilizar el objeto
+        this.setNif(nif1.getNif());
+        this.setDireccion(nif1.getDireccion());
+        this.setNombreMadre(nif1.getNombreMadre());
+        this.setNombrePadre(nif1.getNombrePadre());
+    }
+    
+    //metodos
     public String getNif() {
         return nif;
     }
@@ -70,6 +82,7 @@ public class Nif {
         this.setNombreMadre(lector.nextLine());
         System.out.println("el nombre de tu padre");
         this.setNombrePadre(lector.nextLine());
+        //lector.close(); //ciero el lector -- no me funciona
     }
     
     public void mostrarAtributosNif(){
