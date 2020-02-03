@@ -62,11 +62,9 @@ public class Practica3 {
         //empieza el programa
         Scanner lector = new Scanner(System.in);
         boolean exit = false;
-        boolean wenttocatch = false; //valido q el usuario me inserta un numero
         //inicializo la variable para que el swich funcione
         //pendiente probar si el swich hay que meterlo en el do
-        int opcion = -1;
-        int posicion; //esta variable la utilizo el switch
+        int posicion; //variable util en algunos métodos del switch
         do{
             System.out.println("=============== MENU PRINCIPAL ============");
             System.out.println("0. Crear Nueva Cuenta");
@@ -75,15 +73,11 @@ public class Practica3 {
             System.out.println("3. Realizar transferencia");
             System.out.println("4. Salir");
             System.out.println("¿Qué opción quieres realizar?");
+            /*valido q el usuario me inserte un integer y que sea una
+            de las opciones disponibles*/
             if(lector.hasNextInt()){
-                opcion = lector.nextInt();
-            }
-            else{
-                lector.nextLine();
-                System.out.println("la opcion indicada no es válida. Por favor,"
-                    + "escoge una opción del menu");
-            }
-            switch(opcion){
+                int opcion = lector.nextInt();
+                switch(opcion){
                 case 4:
                     exit = true;
                     break;
@@ -93,46 +87,48 @@ public class Practica3 {
                     break;
                 case 1:
                     posicion=verificarCuenta(Cuentas);
-                    if(posicion<=Cuentas.size()){
-                        Cuentas.get(posicion).realizarIngreso();  
-                    }
                     //-1 es el valor que le asigno si no existe la cuenta
-                    else if(posicion==-1){
-                        System.out.println("La cuenta indicada no existe");
+                    if(posicion<Cuentas.size() && posicion != -1){
+                        Cuentas.get(posicion).realizarIngreso();
                     }
                     break;
                 case 2:
                     posicion=verificarCuenta(Cuentas);
-                    if(posicion<=Cuentas.size()){
+                    //-1 es el valor que le asigno si no existe la cuenta
+                    if(posicion<Cuentas.size() && posicion != -1){
                         Cuentas.get(posicion).realizarReintegro();
-                    }
-                    else if(posicion==-1){
-                        System.out.println("La cuenta indicada no existe");
                     }
                     break;
                 case 3:
                     System.out.println("Dime el importe a transferir:");
                     double importe = lector.nextDouble();
-                    System.out.println("A continuación, indica los datos de la cuenta origen");
+                    System.out.println("A continuación, indica los datos"
+                            + "de la cuenta origen");
                     int posicionOrigen = verificarCuenta(Cuentas);
-                    System.out.println("A continuación, indica los datos de la cuenta destino");
+                    System.out.println("A continuación, indica los datos"
+                            + "de la cuenta destino");
                     int posicionDestino = verificarCuenta(Cuentas);
-                    if(posicionOrigen<=Cuentas.size() && posicionDestino<=Cuentas.size()){
-                        Cuentas.get(posicionOrigen).realizarTransferencia(Cuentas.get(posicionDestino), importe);
+                    //-1 es el valor que le asigno si no existe la cuenta
+                    if(posicionOrigen<Cuentas.size() &&
+                            posicionDestino<Cuentas.size() &&
+                            posicionOrigen != -1 && posicionDestino != -1){
+                        Cuentas.get(posicionOrigen).realizarTransferencia
+        (Cuentas.get(posicionDestino), importe);
                     }
                     else{
                         System.out.println("La operacion no se puede realizar");
                     }
                     break;
                 default:
-                    if (!lector.hasNextInt()){
-                        System.out.println("La opción indicada no es correcta,"
+                    System.out.println("La opción indicada no es correcta,"
                             + "por favor, indica otra.");
-                    }
-                    else{
-                        System.out.println("indica na opcion correcta");
-                    }
+                }
             }
-        } while (exit == false && wenttocatch == false);
+            else{
+                lector.nextLine();
+                System.out.println("la opcion indicada no es válida. Por favor,"
+                    + " escoge una opción del menu");
+            }
+        } while (exit == false);
     }
 }

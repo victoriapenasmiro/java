@@ -90,15 +90,19 @@ public class Cuenta {
         Scanner lector1 = new Scanner(System.in);
         String numcuenta = lector1.nextLine();
         int i = 0;
-        while(!numcuenta.equals(cuentas.get(i).getNumCuenta()) && i < cuentas.size()){
-            i++;
+        while(!numcuenta.equals(cuentas.get(i).getNumCuenta()) && i != cuentas.size()-1){
+                i++;              
         }
-        if (!cuentas.get(i).getNumCuenta().equals(cuentas.get(i).getNumCuenta())){
-            i=-1; // reseteo el valor para controlar si existe o no
-        }
-        else{
+        
+        if (numcuenta.equals(cuentas.get(i).getNumCuenta())){
             System.out.println("cuenta valida");
         }
+        
+        else{
+            i=-1;
+            System.out.println("La cuenta indicada no existe.");
+        }
+        
         return i;
     }
     
@@ -131,7 +135,7 @@ public class Cuenta {
             importe = lector.nextDouble();
         }
         if(this.getSaldo()<importe){
-            System.out.println("No tienes suficiente saldo para sacar.");
+            System.out.println("No tienes suficiente saldo para sacar dinero.");
         }
         else{
             this.setSaldo(getSaldo()-importe);
@@ -145,10 +149,14 @@ public class Cuenta {
         if(this.getSaldo()>=importe){
             this.setSaldo(this.getSaldo()-importe);
             cuentaDestino.setSaldo(getSaldo()+importe);
+            System.out.println("Transferencia realizada con éxito."
+                    + "Ce han transferido: " + importe + "€ desde la cuenta "
+                    + this.getNumCuenta() + "a la cuenta "
+                    + cuentaDestino.getNumCuenta());
         }
         else{
             System.out.println("No tienes saldo suficiente para realizar"
-                    + "una transferencia.");
+                    + "la transferencia.");
         }
     }
 }
