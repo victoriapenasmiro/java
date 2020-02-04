@@ -17,15 +17,17 @@ public class Cuenta {
     private String numCuenta;
     private double tipoInteres;
     private double saldo;
+    private String pin;
     
     //contructores
     //constructor con todos los parámetros
     public Cuenta(String nombreCliente, String numCuenta, double tipoInteres,
-            double saldo) {
+            double saldo, String pin) {
         this.setNombreCliente(nombreCliente);
         this.setNumCuenta(numCuenta);
         this.setTipoInteres(tipoInteres);
         this.setSaldo(saldo);
+        this.setPin(pin);
     }
     //Constructor por defecto.
     public Cuenta() {
@@ -36,6 +38,7 @@ public class Cuenta {
         this.setNumCuenta(c1.getNumCuenta());
         this.setTipoInteres(c1.getTipoInteres());
         this.setSaldo(c1.getSaldo());
+        this.setPin(c1.getPin());
     }
     
     //setters y getters
@@ -70,13 +73,72 @@ public class Cuenta {
     public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
+
+    public String getPin() {
+        return pin;
+    }
+
+    public void setPin(String pin) {
+        this.pin = pin;
+    }
+    
     //Me declaro el Scanner que utilizaré en todos los métodos
     Scanner lector = new Scanner(System.in);
 
-    //resto de metodos
+    //resto de metodos    
+    //método para comprobar si la cuenta está dada de alta
+    public static int iniciarSesion(ArrayList <Cuenta> cuentas,
+            String numcuenta, String pin){
+        int i = 0;
+        while(!numcuenta.equals(cuentas.get(i).getNumCuenta()) &&
+                pin.equals(cuentas.get(i).getPin())
+                && i != cuentas.size()-1){
+                i++;              
+        }
+        //convierto el pin a string para poder revisar si existe
+        if(numcuenta.equals(cuentas.get(i).getNumCuenta()) &&
+                pin.equals(cuentas.get(i).getPin())){
+            System.out.println("cuenta validada");
+        }
+        
+        else{
+            i=-1;
+            System.out.println("Acceso denegado. Inténtalo de nuevo.");
+        }
+        
+        return i;
+    }
+    // método para verificar que una cuenta existe
+        public static int verificarCuenta(ArrayList <Cuenta> cuentas,
+            String numcuenta){
+        int i = 0;
+        while(!numcuenta.equals(cuentas.get(i).getNumCuenta())
+                && i != cuentas.size()-1){
+                i++;              
+        }
+        
+        if (numcuenta.equals(cuentas.get(i).getNumCuenta())){
+            System.out.println("cuenta correcta");
+        }
+        
+        else{
+            i=-1;
+            System.out.println("La cuenta indicada no existe."
+                    + "No se puede hacer la transferencia.");
+        }
+        
+        return i;
+    }
+    
     public Cuenta crearCuenta(ArrayList cuentas){
         System.out.println("dime tu nombre");
         this.setNombreCliente(lector.nextLine());
+        System.out.println("Carga un código pin de 4 dígitos");
+        this.setPin(lector.next());
+        while(this.getPin().length() != 4){
+            System.out.println("formato de pin incorrecto, indica 4 digitos");
+            this.setPin(lector.next());
+        }
         this.setNumCuenta(String.valueOf(cuentas.size()+1));
         System.out.println("tu numero de cuenta es " + this.getNumCuenta());
         this.setSaldo(0);
@@ -84,31 +146,10 @@ public class Cuenta {
         cuentas.add(this);
         return this;
     }
-    //método para comprobar si la cuenta está dada de alta
-    public static int verificarCuenta(ArrayList <Cuenta> cuentas){
-        System.out.println("Dime el numero de cuenta:");
-        Scanner lector1 = new Scanner(System.in);
-        String numcuenta = lector1.nextLine();
-        int i = 0;
-        while(!numcuenta.equals(cuentas.get(i).getNumCuenta()) && i != cuentas.size()-1){
-                i++;              
-        }
         
-        if (numcuenta.equals(cuentas.get(i).getNumCuenta())){
-            System.out.println("cuenta valida");
-        }
-        
-        else{
-            i=-1;
-            System.out.println("La cuenta indicada no existe.");
-        }
-        
-        return i;
-    }
-    
     public boolean realizarIngreso(){
         boolean resultado = false; //variable local, valor inicial = true
-        double importe = 0; //inicializo la variable local
+        double importe; //inicializo la variable local
         System.out.println("Dime la cantidad que deseas ingresar:");
         importe = lector.nextDouble();
         while(importe<1){
@@ -126,7 +167,7 @@ public class Cuenta {
     
     public boolean realizarReintegro(){
         boolean resultado = false;
-        double importe = 0;
+        double importe;
         System.out.println("Dime el importe a retirar:");
         importe = lector.nextDouble();
         while(importe<1){
@@ -150,7 +191,7 @@ public class Cuenta {
             this.setSaldo(this.getSaldo()-importe);
             cuentaDestino.setSaldo(getSaldo()+importe);
             System.out.println("Transferencia realizada con éxito."
-                    + "Ce han transferido: " + importe + "€ desde la cuenta "
+                    + "se han transferido: " + importe + "€ desde la cuenta "
                     + this.getNumCuenta() + "a la cuenta "
                     + cuentaDestino.getNumCuenta());
         }
