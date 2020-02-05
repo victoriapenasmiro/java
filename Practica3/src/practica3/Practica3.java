@@ -7,6 +7,7 @@ package practica3;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import static practica3.Cuenta.crearCuenta;
 import static practica3.Cuenta.iniciarSesion;
 import static practica3.Cuenta.verificarCuenta;
 
@@ -105,8 +106,7 @@ public class Practica3 {
                     exit = true;
                     break;
                 case 2:
-                    Cuenta nuevaCuenta = new Cuenta();
-                    nuevaCuenta.crearCuenta(Cuentas);
+                    Cuenta.crearCuenta(Cuentas);
                     break;
                 case 1:
                     System.out.println("Dime el numero de cuenta:");

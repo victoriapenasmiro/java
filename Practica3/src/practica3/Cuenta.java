@@ -130,21 +130,23 @@ public class Cuenta {
         return i;
     }
     
-    public Cuenta crearCuenta(ArrayList cuentas){
+    public static Cuenta crearCuenta(ArrayList <Cuenta> cuentas){
+        Scanner lector = new Scanner(System.in);
+        Cuenta nuevaCuenta = new Cuenta();
         System.out.println("dime tu nombre");
-        this.setNombreCliente(lector.nextLine());
+        nuevaCuenta.setNombreCliente(lector.nextLine());
         System.out.println("Carga un código pin de 4 dígitos");
-        this.setPin(lector.next());
-        while(this.getPin().length() != 4){
+        nuevaCuenta.setPin(lector.next());
+        while(nuevaCuenta.getPin().length() != 4){
             System.out.println("formato de pin incorrecto, indica 4 digitos");
-            this.setPin(lector.next());
+            nuevaCuenta.setPin(lector.next());
         }
-        this.setNumCuenta(String.valueOf(cuentas.size()+1));
-        System.out.println("tu numero de cuenta es " + this.getNumCuenta());
-        this.setSaldo(0);
-        this.setTipoInteres(0.25);
-        cuentas.add(this);
-        return this;
+        nuevaCuenta.setNumCuenta(String.valueOf(cuentas.size()+1));
+        System.out.println("tu numero de cuenta es " + nuevaCuenta.getNumCuenta());
+        nuevaCuenta.setSaldo(0);
+        nuevaCuenta.setTipoInteres(0.25);
+        cuentas.add(nuevaCuenta);
+        return nuevaCuenta;
     }
         
     public boolean realizarIngreso(){
