@@ -171,7 +171,7 @@ public class Pelicula {
         }
     }
     
-    public static void reservarPelicula (ArrayList <Pelicula> peliculas){
+    public static void reservarPelicula (ArrayList <Pelicula> peliculas, Cliente cliente){
         Scanner lector = new Scanner(System.in);
         listarPeliculas(peliculas);
         System.out.println("Dime el id de la pelicula que quieres reservar");
@@ -179,15 +179,19 @@ public class Pelicula {
         if (id > peliculas.size()){
             System.out.println("El id indicado no existe");
         }
-        else if (peliculas.get(id).isDisponibilidad() == false){
+        //resto 1 porque el id empieza en 1 y con el get recupero desde la posicion 0
+        else if (peliculas.get(id-1).isDisponibilidad() == false){
             System.out.println("no está disponible la película.");
         }
         else{
             System.out.println("Película reservada");
             //actualizo la cantidad de copias reservadas
-            peliculas.get(id).setCopiasReservadas(peliculas.get(id).getCopiasReservadas()-1);
-            if (peliculas.get(id).getCopiasReservadas() == peliculas.get(id).getNumCopias()){
-                peliculas.get(id).setDisponibilidad(false);
+            peliculas.get(id-1).setCopiasReservadas(peliculas.get(id-1).getCopiasReservadas()+1);
+            //añado la pelicula al cliente
+            cliente.altaPeliReservada(peliculas.get(id-1));
+            //si ya no hay copias, cambio la disponibilidad de la pelicula
+            if (peliculas.get(id-1).getCopiasReservadas() == peliculas.get(id-1).getNumCopias()){
+                peliculas.get(id-1).setDisponibilidad(false);
             }
         }
     }
