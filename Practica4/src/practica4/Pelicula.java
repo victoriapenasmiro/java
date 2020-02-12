@@ -288,4 +288,18 @@ public class Pelicula {
                 break;
         }
     }
+    
+    //enseño todas las pelis reservadas
+    public static void mostrarPelisReservadas(ArrayList <Cliente> clientes){
+        System.out.println("Las peliculas reservadas son:");
+        for (int i=0;i<clientes.size();i++){
+            if(clientes.get(i).getPeliculasReservadas().size() > 0){
+                System.out.println("Datos del cliente:");
+                System.out.println(clientes.get(i).getNombre() + " " +
+                clientes.get(i).getApellidos() + " con codigo de cliente: " +
+                clientes.get(i).getCodCliente());
+                clientes.get(i).verPeliculasReservadas();
+            }
+        }
+    }
 }

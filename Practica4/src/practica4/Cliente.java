@@ -109,9 +109,9 @@ public class Cliente {
     public void altaPeliReservada(Pelicula pelicula){
         this.peliculasReservadas.add(pelicula);
     }
-    
+    //metodo de instancia para ver las pelis reservadas de un cliente
     public void verPeliculasReservadas(){
-        System.out.println("Las peliculas que tienes reservadas son");
+        System.out.println("Las peliculas reservadas son");
         for (int i=0;i<this.getPeliculasReservadas().size();i++){
             System.out.println("id: " + peliculasReservadas.get(i).getId() + " titulo: " +
             peliculasReservadas.get(i).getTitulo() + " año: " + peliculasReservadas.get(i).getAnio()+

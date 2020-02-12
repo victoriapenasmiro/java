@@ -10,6 +10,7 @@ import java.util.Scanner;
 import static practica4.Cliente.altaCliente;
 import static practica4.Pelicula.addPelicula;
 import static practica4.Pelicula.buscarPelicula;
+import static practica4.Pelicula.mostrarPelisReservadas;
 import static practica4.Pelicula.reservarPelicula;
 
 /**
@@ -47,8 +48,9 @@ public class Practica4 {
             System.out.println("1. Añadir Película");
             System.out.println("2. Reservar Pelicula");
             System.out.println("3. Ver peliculas que tengo reservadas");
-            System.out.println("4. Buscar Pelicula");
-            System.out.println("5. Salir");
+            System.out.println("4. Ver todas las peliculas reservadas del videoclub");
+            System.out.println("5. Buscar Pelicula");
+            System.out.println("6. Salir");
             if(lector.hasNextInt()){
                 int opcion = lector.nextInt();
                 switch(opcion){
@@ -63,12 +65,17 @@ public class Practica4 {
                         if (posicionCliente == -1){
                             posicionCliente = verInicio(clientes,peliculas);
                         }
-                        clientes.get(posicionCliente).verPeliculasReservadas();
+                        else{
+                            clientes.get(posicionCliente).verPeliculasReservadas();
+                        }
                         break;
                     case 4:
-                        buscarPelicula(peliculas);
+                        mostrarPelisReservadas(clientes);
                         break;
                     case 5:
+                        buscarPelicula(peliculas);
+                        break;
+                    case 6:
                         exit = true;
                         break;
                     default:
