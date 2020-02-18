@@ -10,7 +10,7 @@ import java.util.Scanner;
 /**
  *
  * @author victoriapenas
-Este listado de ejercicios están publicados en:
+ * Este listado de ejercicios están publicados en:
 https://www.discoduroderoer.es/ejercicios-propuestos-y-resueltos-basicos-java/
  */
 public class DiscoduroderoEjercicios {

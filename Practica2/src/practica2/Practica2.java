@@ -172,7 +172,7 @@ public class Practica2 {
                 if (aux1<matriz1.length){
                     matriz1[aux1][aux2] = valor;
                     if (aux2+1<matriz1[aux1].length){//sumo 1 para que si aux2
-                    //llega al llenar la segunda dimensión no incremente
+                    //llega a llenar la segunda dimensión no incremente
                         aux2++;
                     }
                 

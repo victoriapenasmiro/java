@@ -82,7 +82,8 @@ public class Nif {
         this.setNombreMadre(lector.nextLine());
         System.out.println("el nombre de tu padre");
         this.setNombrePadre(lector.nextLine());
-        //lector.close(); //ciero el lector -- no me funciona
+        //lector.close(); //cierro el lector -- no me funciona
+        //comentado con rafa, parece que comparten lector
     }
     
     public void mostrarAtributosNif(){

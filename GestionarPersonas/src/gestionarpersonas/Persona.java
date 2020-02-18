@@ -19,7 +19,8 @@ public class Persona {
     private String apellido2;
     private int edad;
     private Nif infNif;
-    
+    //otra opción para no instanciar en los constructores:
+    //private Nif infNif=new Nif();
     //atajo para crear constructor: ctrl+i
     
     //constructor con todos los parámetros.
@@ -98,8 +99,9 @@ public class Persona {
         System.out.println("dime el apellido 2");
         this.setApellido2(lector.nextLine());
         //pediré a continuación los datos del DNI
-        this.setNif(new Nif());//tengo que instanciar el objeto llamando al constructor vacío de la clase Nif
-        infNif.solicitarDatosNif();
+        this.setNif(new Nif());//tengo que instanciar el objeto llamando al
+        //constructor vacío de la clase Nif
+        this.getInfNif().solicitarDatosNif();
         System.out.println("dime la edad");
         this.setEdad(Integer.parseInt(lector.nextLine()));
         /*cuando en un mismo método pedimos por teclado enteros y strings,
@@ -114,7 +116,7 @@ public class Persona {
         System.out.println("el nombre es "+this.getNombre());
         System.out.println("el apellido 1 es "+this.getApellido1());
         System.out.println("el apellido 2 es "+this.getApellido2());
-        infNif.mostrarAtributosNif();
+        this.getInfNif().mostrarAtributosNif();
         System.out.println("la edad es "+this.getEdad());
     }
 }
