@@ -20,11 +20,6 @@ final public class Repartidor extends Empleado{
     public Repartidor() {
     }
 
-    public Repartidor(double horasTrabajadas, String zona) {
-        this.setHorasTrabajadas(horasTrabajadas);
-        this.setZona(zona);
-    }
-
     public Repartidor(double horasTrabajadas, String zona, String nombre, String apellido1, String apellido2, String nif, int edad, double salario) {
         super(nombre, apellido1, apellido2, nif, edad, salario);
         this.setHorasTrabajadas(horasTrabajadas);
@@ -66,7 +61,7 @@ final public class Repartidor extends Empleado{
         Scanner lector = new Scanner(System.in);
         super.pedirAlta(); //llamo al método del padre
         System.out.println("dime las horas trabajadas");
-        this.setHorasTrabajadas(lector.nextDouble());
+        this.setHorasTrabajadas(Double.parseDouble(lector.nextLine()));
         System.out.println("Dime la zona");
         this.setZona(lector.nextLine());
         

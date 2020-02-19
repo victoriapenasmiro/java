@@ -191,7 +191,7 @@ public class Cuenta {
     public void realizarTransferencia(Cuenta cuentaDestino, double importe){
         if(this.getSaldo()>=importe){
             this.setSaldo(this.getSaldo()-importe);
-            cuentaDestino.setSaldo(getSaldo()+importe);
+            cuentaDestino.setSaldo(cuentaDestino.getSaldo()+importe);
             System.out.println("Transferencia realizada con éxito."
                     + "se han transferido: " + importe + "€ desde la cuenta "
                     + this.getNumCuenta() + "a la cuenta "

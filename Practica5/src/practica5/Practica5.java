@@ -45,95 +45,25 @@ public class Practica5 {
                 int opcion = lector.nextInt();
                 switch (opcion) {
                     case 1:
-                        Empleado nuevoEmpleado = new Empleado();
-                        empleados.add(nuevoEmpleado.pedirAlta());
-                        //empleados.add(Empleado.pedirAlta());
+                        empleados.add(new Empleado().pedirAlta());
                         break;
                     case 2:
-                        Comercial nuevoComercial = new Comercial();
-                        empleados.add(nuevoComercial.pedirAlta());
-                        //empleados.add(Comercial.pedirAlta());
+                        empleados.add(new Comercial().pedirAlta());
                         break;
                     case 3:
-                        Repartidor nuevoRepartidor = new Repartidor();
-                        empleados.add(nuevoRepartidor.pedirAlta());
-                        //empleados.add(Repartidor.pedirAlta());
+                        empleados.add(new Repartidor().pedirAlta());
                         break;
                     case 4:
-                        if (empleados.isEmpty()){
-                            System.out.println("No hay empleados registrados");
-                        }
-                        else{
-                            //Un objeto es instancia de la clase a partir de la
-                            //la que fue creado y de todas sus superclases.
-                            for (int i=0; i<empleados.size();i++){
-                                if(empleados.get(i) instanceof Empleado){
-                                    empleados.get(i).mostrarAtributos();
-                                }
-                            }
-                        }
+                        opcion = 1;
+                        mostrarDatos (empleados,opcion);
                         break;
                     case 5:
-                        //¿Esta comprobación se podría meter en un método a parte?
-                        //la necesito hacer en los tres casos, pero con su correspondiente
-                        //instanceof y no se como plantearlo
-                        int j = 0; //aux para el while
-                        int vueltas = 0; //contador para el while
-                        if (empleados.isEmpty()){
-                            System.out.println("No hay comerciales registrados");
-                        }
-                        
-                        else{
-                            //bucle para comprobar si hay comerciales creados
-                            //sino los hay salta mensaje
-                            while (j == 0 && vueltas<empleados.size()){
-                                if(empleados.get(j) instanceof Comercial){
-                                    j++;
-                                }
-                                vueltas +=1;
-                            }
-                            
-                            if (j !=0){
-                                for (int i=0; i<empleados.size();i++){
-                                    if(empleados.get(i) instanceof Comercial){
-                                        empleados.get(i).mostrarAtributos();
-                                    }
-                                }
-                            }
-                            else{
-                                System.out.println("No hay comerciales registrados");
-                            }
-                        }
-                        
+                        opcion = 2;
+                        mostrarDatos (empleados,opcion);
                         break;
                     case 6:
-                        j = 0; //aux para el while
-                        vueltas = 0; //contador para el while
-                        if (empleados.isEmpty()){
-                            System.out.println("No hay repartidores registrados");
-                        }
-                        
-                        else{
-                            //bucle para comprobar si hay comerciales creados
-                            //sino los hay salta mensaje
-                            while (j == 0 && vueltas<empleados.size()){
-                                if(empleados.get(j) instanceof Repartidor){
-                                    j++;
-                                }
-                                vueltas +=1;
-                            }
-                            
-                            if (j !=0){
-                                for (int i=0; i<empleados.size();i++){
-                                    if(empleados.get(i) instanceof Repartidor){
-                                        empleados.get(i).mostrarAtributos();
-                                    }
-                                }
-                            }
-                            else{
-                                System.out.println("No hay repartidores registrados");
-                            }
-                        }
+                        opcion = 3;
+                        mostrarDatos (empleados,opcion);
                         break;
                     case 7:
                         exit = true;
@@ -148,5 +78,61 @@ public class Practica5 {
                         + " escoge una opción del menu");
             }
         } while (exit == false);
+    }
+    
+    public static void mostrarDatos (ArrayList <Empleado> empleados, int opcion){
+        int j = 0; //aux para el while
+        int vueltas = 0; //contador para el while
+        if (empleados.isEmpty()){
+            System.out.println("No hay empleados registrados");
+        }
+        else{
+            switch (opcion) {
+                case 1:
+                    for (int i=0; i<empleados.size();i++){
+                        if(empleados.get(i) instanceof Empleado){
+                            empleados.get(i).mostrarAtributos();
+                        }
+                    }   break;
+                case 2:
+                    //bucle para comprobar si hay comerciales creados
+                    //sino los hay salta mensaje
+                    while (j == 0 && vueltas<empleados.size()){
+                        if(empleados.get(vueltas) instanceof Comercial){
+                            j++;
+                        }
+                        vueltas +=1;
+                    }
+                    if (j !=0){
+                        for (int i=0; i<empleados.size();i++){
+                            if(empleados.get(i) instanceof Comercial){
+                                empleados.get(i).mostrarAtributos();
+                            }
+                        }
+                    } else{
+                        System.out.println("No hay comerciales registrados");
+                    }   break;
+                case 3:
+                    while (j == 0 && vueltas<empleados.size()){
+                        if(empleados.get(vueltas) instanceof Repartidor){
+                            j++;
+                        }
+                        vueltas +=1;
+                    }
+                    if (j !=0){
+                        for (int i=0; i<empleados.size();i++){
+                            if(empleados.get(i) instanceof Repartidor){
+                                empleados.get(i).mostrarAtributos();
+                            }
+                        }
+                    }
+                    else{
+                        System.out.println("No hay repartidores registrados");
+                    }   break;
+                default:
+                    break;
+            }
+        }
+        
     }
 }

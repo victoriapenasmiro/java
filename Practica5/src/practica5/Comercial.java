@@ -32,7 +32,7 @@ final public class Comercial extends Empleado{
 
     //como creo el constructor copia en herencia
     public Comercial(Comercial c1, Empleado e1) {
-        //super(e1.setNombre(nombre));
+        super(e1);
         this.setVentas(c1.ventas);
         this.setComision(c1.ventas);
     }

@@ -60,7 +60,7 @@ public class Empleado {
 
     public void setApellido1(String apellido1) {
         //convierto a mayúsculas el primer caracter del nombre
-        this.apellido1 = apellido1.substring(0, 1).toUpperCase() + apellido1.substring(1);;
+        this.apellido1 = apellido1.substring(0, 1).toUpperCase() + apellido1.substring(1);
     }
 
     public String getApellido2() {
@@ -69,7 +69,7 @@ public class Empleado {
 
     public void setApellido2(String apellido2) {
         //convierto a mayúsculas el primer caracter del nombre
-        this.apellido2 = apellido2.substring(0, 1).toUpperCase() + apellido2.substring(1);;
+        this.apellido2 = apellido2.substring(0, 1).toUpperCase() + apellido2.substring(1);
     }
 
     public String getNif() {
@@ -110,7 +110,6 @@ public class Empleado {
     
     public Empleado pedirAlta(){
         Scanner lector = new Scanner(System.in);
-        //Empleado nuevoEmpleado = new Empleado();
         System.out.println("Dime el nombre");
         this.setNombre(lector.nextLine());
         System.out.println("Dime el primer apellido");
