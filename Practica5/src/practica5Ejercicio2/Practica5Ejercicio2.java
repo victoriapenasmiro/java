@@ -7,6 +7,8 @@ package practica5Ejercicio2;
 
 import java.util.ArrayList;
 import java.util.Scanner;
+import static practica5Ejercicio2.Taxi.buscarTaxiLibre;
+import static practica5Ejercicio2.Taxi.cambiarEstadoLibre;
 import static practica5Ejercicio2.Vehiculo.buscarVehiculo;
 import static practica5Ejercicio2.Vehiculo.mostrarVehiculos;
 
@@ -21,14 +23,17 @@ public class Practica5Ejercicio2 {
         //contador de instancias
         int contador = 0;
         
+        //contador para asignar una licencia de tres cifras de forma automática a los taxis
+        int contadorLicencias = 99;
+        
         //arrayList de vehiculos
         ArrayList<Vehiculo> vehiculos = new ArrayList<Vehiculo>();
         
         //Empieza el programa
-        mostrarMenu(vehiculos, contador);
+        mostrarMenu(vehiculos, contador, contadorLicencias);
     }
     
-    public static void mostrarMenu(ArrayList<Vehiculo> vehiculos, int contador){
+    public static void mostrarMenu(ArrayList<Vehiculo> vehiculos, int contador, int contadorLicencias){
         Scanner lector = new Scanner(System.in);
         boolean exit = false;
         do {
@@ -39,8 +44,8 @@ public class Practica5Ejercicio2 {
             System.out.println("4. Buscar un vehiculo");
             System.out.println("5. Buscar un taxi libre");
             System.out.println("6. Cambiar estado de un taxi a libre");
-            System.out.println("8. Ver todos los vehiculos existentes");
-            System.out.println("9. Salir");
+            System.out.println("7. Ver todos los vehiculos existentes");
+            System.out.println("8. Salir");
             if (lector.hasNextInt()) {
                 int opcion = lector.nextInt();
                 switch (opcion) {
@@ -48,9 +53,14 @@ public class Practica5Ejercicio2 {
                         Taxi nuevoTaxi = new Taxi();
                         //una vez añadido el taxi a la lista,
                         //le asigno el id en función del contador general
+                        //y el codigo de licencia
                         if(vehiculos.add(nuevoTaxi.crearVehiculo())){
                             contador+=1;
+                            contadorLicencias+=1;
                             nuevoTaxi.setId(contador);
+                            nuevoTaxi.setLicencia(contadorLicencias);
+                            System.out.println("El numero de licencia asignado"
+                                    + " es el: " + nuevoTaxi.getLicencia());
                         }
                         break;
                     case 2:
@@ -71,15 +81,15 @@ public class Practica5Ejercicio2 {
                         buscarVehiculo(vehiculos);
                         break;
                     case 5:
+                        buscarTaxiLibre(vehiculos);
                         break;
                     case 6:
+                        cambiarEstadoLibre(vehiculos);
                         break;
                     case 7:
-                        break;
-                    case 8:
                         mostrarVehiculos(vehiculos);
                         break;
-                    case 9:
+                    case 8:
                         exit = true;
                         break;
                     default:

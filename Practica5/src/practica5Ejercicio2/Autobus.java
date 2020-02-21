@@ -43,6 +43,12 @@ public class Autobus extends Vehiculo{
     }
 
     public void setParadas(int paradas) {
+        Scanner lector = new Scanner(System.in);
+        while (paradas < 3 || paradas>20 ){
+            System.out.println("Las paradas mínimas serán 3 y las máximas 20. Dime una cantidad valida:");
+            paradas = lector.nextInt();
+        }
+        
         this.paradas = paradas;
     }
    

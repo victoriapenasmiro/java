@@ -38,6 +38,12 @@ public class VTC extends Vehiculo{
     }
 
     public void setHorasTrabajadas(double horasTrabajadas) {
+        Scanner lector = new Scanner(System.in);
+        while(horasTrabajadas>24){
+            System.out.println("Las horas trabajadas no pueden ser superiores a 24."
+                    + "Por favor, indica un valor valido:");
+            horasTrabajadas = lector.nextInt();
+        }
         this.horasTrabajadas = horasTrabajadas;
     }
 
@@ -46,9 +52,16 @@ public class VTC extends Vehiculo{
     }
 
     public void setRadio(int radio) {
+        Scanner lector = new Scanner(System.in);
+        while(radio>50){
+            System.out.println("El daio no puede ser superior a 50km,"
+                    + "por favor, indica un valor valido:");
+            radio = lector.nextInt();
+        }
         this.radio = radio;
     }
-
+    
+    
     public String getCiudad() {
         return ciudad;
     }
@@ -61,16 +74,16 @@ public class VTC extends Vehiculo{
     public void mostrarAtributos(){
         super.mostrarAtributos();
         System.out.println("número máximo de horas trabajadas: " + this.getHorasTrabajadas()
-        + " radio de acción en km por el que pueden trabajar" + this.getHorasTrabajadas()
-        + " ciudad para la que trabajan: " + this.getCiudad());
+        + " radio de acción en km por el que pueden trabajar: " + this.getHorasTrabajadas()
+        + " ciudad para la que trabaja: " + this.getCiudad());
     }
-    
+   
     @Override
     public VTC crearVehiculo(){
         Scanner lector = new Scanner(System.in);
         super.crearVehiculo();
         System.out.println("Dime el número máximo de horas trabajadas:");
-        this.setHorasTrabajadas(lector.nextDouble());
+        this.setHorasTrabajadas(Double.parseDouble(lector.nextLine()));
         System.out.println("Dime el radio de acción en km por el que pueden trabajar:");
         this.setRadio(Integer.parseInt(lector.nextLine()));
         System.out.println("Dime la ciudad para la que trabajan:");
