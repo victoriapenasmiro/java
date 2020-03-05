@@ -53,12 +53,26 @@ public class Cilindro implements figurasGeometricas{
     @Override
     public double calcularVolumen() {
         Scanner lector = new Scanner(System.in);
+        double altura;
+        double radio;
         try{
             System.out.println("Dime el tamaño en metros de la altura:");
-            this.setAltura(lector.nextDouble());
+            altura = lector.nextDouble();
+            
             System.out.println("Dime el tamaño en metros del radio");
-            this.setRadio(lector.nextDouble());
-        }catch (InputMismatchException e){
+            radio = lector.nextDouble();
+            
+            if (altura <=0 || radio <=0){
+                throw new ExceptionFiguras();
+            }
+            else{
+                this.setRadio(radio);
+                this.setAltura(altura);
+            }
+        }catch (ExceptionFiguras ex){
+            ex.controlarValor();
+        }
+        catch (InputMismatchException e){
             System.out.println("Por favor, indtroduce un valor numérico. Inténtalo de nuevo");
             this.calcularVolumen();
         }

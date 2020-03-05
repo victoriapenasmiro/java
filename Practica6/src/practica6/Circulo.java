@@ -41,11 +41,19 @@ public class Circulo implements figurasGeometricas{
 
     @Override
     public double calcularVolumen() {
+        double radio;
         Scanner lector = new Scanner(System.in);
         System.out.println("Dime el radio:");
         try{
-            this.setRadio(lector.nextDouble());
-            this.setRadio(radio);
+            radio = lector.nextDouble();
+            if(radio<=0){
+                throw new ExceptionFiguras();
+            }
+            else{
+                this.setRadio(radio);
+            }
+        } catch (ExceptionFiguras e){
+            e.controlarValor();
         } catch (Exception e){
             System.out.println("El radio indicado no es correcto. Indica un"
                     + " valor válido");
@@ -100,28 +108,26 @@ public class Circulo implements figurasGeometricas{
             System.out.println("3. Imprimir características de un círculo o esfera");
             System.out.println("4. Salir");
             int opcion = lector.nextInt();
-            if (opcion == 1 || opcion == 2 || opcion == 3){
-                Circulo nuevoCirculo = new Circulo();
-                switch (opcion) {
-                    case 1:
-                        //este tipo de print me permite dar formato al double que me retorna este método.
-                        System.out.printf("%.2f",nuevoCirculo.calcularArea());
-                        break;
-                    case 2:
-                        //este tipo de print me permite dar formato al double que me retorna este método.
-                        System.out.printf("%.2f",nuevoCirculo.calcularVolumen());
-                        break;
-                    case 3:
-                        nuevoCirculo.imprimirCaracteristicas();
-                        break;
-                    case 4:
-                        exit = true;
-                        break;
-                    default:
-                        System.out.println("La opción indicada no es correcta,"
-                                + "por favor, indica otra.");
-                }
-                }
+            Circulo nuevoCirculo = new Circulo();
+            switch (opcion) {
+                case 1:
+                    //este tipo de print me permite dar formato al double que me retorna este método.
+                    System.out.printf("%.2f",nuevoCirculo.calcularArea());
+                    break;
+                case 2:
+                    //este tipo de print me permite dar formato al double que me retorna este método.
+                    System.out.printf("%.2f",nuevoCirculo.calcularVolumen());
+                    break;
+                case 3:
+                    nuevoCirculo.imprimirCaracteristicas();
+                    break;
+                case 4:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("La opción indicada no es correcta,"
+                            + "por favor, indica otra.");
+            }
         } while (exit == false);  
     }   
     

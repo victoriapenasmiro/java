@@ -7,6 +7,8 @@ package practica6;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -60,14 +62,25 @@ public class TrianguloPiramide implements figurasGeometricas{
     @Override
     public double calcularVolumen() {
         Scanner lector = new Scanner(System.in);
+        double altura;
+        double base;
         try{
-        System.out.println("Dime el tamaño en metros de la altura:");
-        this.setAltura(lector.nextDouble());
-        System.out.println("Dime el tamaño en metros de la base");
-        this.setBase(lector.nextDouble());
+            System.out.println("Dime el tamaño en metros de la altura:");
+            altura = lector.nextDouble();
+            System.out.println("Dime el tamaño en metros de la base");
+            base = lector.nextDouble();
+            if (altura<=0 || base <=0){
+                throw new ExceptionFiguras();
+            }
+            else{
+                this.setBase(base);
+                this.setAltura(altura);
+            }
         }catch (InputMismatchException e){
             System.out.println("Por favor, indtroduce un valor numérico. Inténtalo de nuevo");
             this.calcularVolumen();
+        } catch (ExceptionFiguras ex) {
+            ex.controlarValor();
         }
         return (this.getAltura()*Math.pow(this.getBase(), 2))/3;
     }

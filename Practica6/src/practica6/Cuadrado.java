@@ -7,7 +7,6 @@ package practica6;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
-
 /**
  *
  * @author victoriapenas
@@ -74,13 +73,24 @@ public class Cuadrado implements figurasGeometricas{
 
     @Override
     public double calcularVolumen() {
+        double arista;
         try{
             Scanner lector = new Scanner(System.in);
             System.out.println("Dime el tamaño en metros de la arista:");
-            this.setArista(lector.nextDouble());
+            arista = lector.nextDouble();
+            if (arista<=0){
+                throw new ExceptionFiguras();
+            }else{
+                this.setArista(arista);
+            }
         }catch (InputMismatchException e){
 //este tipo de excepcion controla que me inserte un valor por teclado del tipo que esperamos
             System.out.println("Por favor, indtroduce un valor numérico. Inténtalo de nuevo");
+            this.calcularVolumen();
+        } catch (ExceptionFiguras ex) {
+            ex.controlarValor();
+            //el siguiente método da problemas, no respecta el orden del print --> reportado a rafa
+            ex.printStackTrace();
             this.calcularVolumen();
         }
         return Math.pow(this.getArista(),3);
