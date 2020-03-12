@@ -5,33 +5,35 @@
  */
 package practica6Ejercicio2;
 
+import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
-import static practica6Ejercicio2.Simulador.mostrarMenu;
 
 /**
  *
  * @author victoriapenas
  */
-public class Apuesta {
+public abstract class Apuesta {
     //atributos
     private String nombre;
     private String apellidos;
+    private int numApuesta;
     //Lo creamos static para que el programa recuerde el valor de la ultima
     //instancia y final para que no se pueda modificar el valor.
-    private static final AtomicInteger numApuesta = new AtomicInteger(100);
+    private static final AtomicInteger incrementalApuesta = new AtomicInteger(99);
 
     //constructores
     public Apuesta() {
-        this.getNumApuesta().incrementAndGet();
+        this.setNumApuesta(getIncrementalApuesta().incrementAndGet());
     }
 
-    public Apuesta(String nombre, String apellidos) {
+    public Apuesta(String nombre, String apellidos) throws ExceptionSimulador {
         this.setNombre(nombre);
         this.setApellidos(apellidos);
-        this.getNumApuesta().incrementAndGet();
+        //no recibe por parametro el num de apuesta, lo incremento automaticamente
+        this.setNumApuesta(getIncrementalApuesta().incrementAndGet());
     }
 
-    public Apuesta(Apuesta nuevaApuesta) {
+    public Apuesta(Apuesta nuevaApuesta) throws ExceptionSimulador {
         this.setNombre(nuevaApuesta.getNombre());
         this.setApellidos(nuevaApuesta.getApellidos());
         this.setNumApuesta(nuevaApuesta.getNumApuesta());
@@ -42,14 +44,10 @@ public class Apuesta {
         return nombre;
     }
 
-    //TO DO ¿es correcto este formato?
     public void setNombre(String nombre) throws ExceptionSimulador {
-        if (this.nombre != this.nombre.toUpperCase()){
-  
+        if (nombre != nombre.toUpperCase()){  
             throw new ExceptionSimulador();
-
-            }
-        
+        }
         else{
             this.nombre = nombre;
         }
@@ -59,16 +57,25 @@ public class Apuesta {
         return apellidos;
     }
 
-    public void setApellidos(String apellidos) {
-        this.apellidos = apellidos;
+    public void setApellidos(String apellidos) throws ExceptionSimulador {
+        if (apellidos != apellidos.toUpperCase()){  
+            throw new ExceptionSimulador();
+        }
+        else{
+            this.apellidos = apellidos;
+        }
     }
 
-    public AtomicInteger getNumApuesta() {
+    public int getNumApuesta() {
         return numApuesta;
     }
 
-    public void setNumApuesta(AtomicInteger numApuesta) {
-        numApuesta.incrementAndGet();
+    public void setNumApuesta(int numApuesta) {
+        this.numApuesta = numApuesta;
+    }
+
+    public static AtomicInteger getIncrementalApuesta() {
+        return incrementalApuesta;
     }
     
     //utilizo el método toString y cambio el nombre
@@ -76,5 +83,5 @@ public class Apuesta {
         return "Apuesta{" + "nombre=" + nombre + ", apellidos=" + apellidos
                 + ", numApuesta=" + numApuesta + '}';
     }
-
+    
 }

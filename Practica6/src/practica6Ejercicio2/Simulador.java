@@ -5,9 +5,6 @@
  */
 package practica6Ejercicio2;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 /**
  *
  * @author victoriapenas
@@ -15,16 +12,10 @@ import java.util.logging.Logger;
 public class Simulador {
     
     public static void main(String[] args) {
-        Apuesta apuesta = new Apuesta();
         try {
-            apuesta.setNombre("ola");//prueba para ver el setter si actúa
+            SimulacionLoteria.mostrarMenu();
         } catch (ExceptionSimulador ex) {
             System.out.println(ex.getMensaje());
-        }
-        mostrarMenu();
-    }
-    
-    public static void mostrarMenu(){
-        System.out.println("menu");
+        }       
     }
 }
