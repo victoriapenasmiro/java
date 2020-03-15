@@ -5,6 +5,7 @@
  */
 package practica6Ejercicio2;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -31,7 +32,7 @@ public abstract class Apuesta {
         this.setApellidos(apellidos);
         //no recibe por parametro el num de apuesta, lo incremento automaticamente
         this.setNumApuesta(getIncrementalApuesta().incrementAndGet());
-    }
+    }    
 
     public Apuesta(Apuesta nuevaApuesta) throws ExceptionSimulador {
         this.setNombre(nuevaApuesta.getNombre());
@@ -46,7 +47,7 @@ public abstract class Apuesta {
 
     public void setNombre(String nombre) throws ExceptionSimulador {
         if (nombre != nombre.toUpperCase()){  
-            throw new ExceptionSimulador();
+            throw new ExceptionSimulador(101);
         }
         else{
             this.nombre = nombre;
@@ -59,7 +60,7 @@ public abstract class Apuesta {
 
     public void setApellidos(String apellidos) throws ExceptionSimulador {
         if (apellidos != apellidos.toUpperCase()){  
-            throw new ExceptionSimulador();
+            throw new ExceptionSimulador(102);
         }
         else{
             this.apellidos = apellidos;
@@ -82,6 +83,45 @@ public abstract class Apuesta {
     public String mostrarApuesta() {
         return "Apuesta{" + "nombre=" + nombre + ", apellidos=" + apellidos
                 + ", numApuesta=" + numApuesta + '}';
+    }
+    
+    public Apuesta pedirNombre() throws ExceptionSimulador{
+        Scanner lector = new Scanner(System.in);
+        System.out.println("Dime tu nombre");
+        this.setNombre(lector.nextLine());
+        System.out.println("Dime tu apellido");
+        this.setApellidos(lector.nextLine());
+        
+        return this;
+    }
+    
+    //he cambiado el programa y no voy a usar este metodo, lo mantengo como ejemplo
+    public static void imprimirApuestas(ArrayList <Apuesta> apuestas){
+        System.out.println("A continuación se muestran todas las apuestas:\n");
+        for (int i=0;i<apuestas.size();i++){
+            if(apuestas.get(i) instanceof Primitiva){
+                System.out.print("Primitiva: ");
+                System.out.print("Num: " + ((Primitiva)apuestas.get(i)).getNumApuesta()
+                        + " Numeros: ");
+                for(int j = 0; j<((Primitiva)apuestas.get(i)).getListaNum().length;j++){
+                    System.out.print(((Primitiva)apuestas.get(i)).getListaNum()[j] + " ");
+                    if (j == ((Primitiva)apuestas.get(i)).getListaNum().length-1){
+                        System.out.println("\n");
+                    }
+                }
+            }
+            else{
+                System.out.print("Quiniela: ");
+                System.out.print("Num: " + ((Quiniela)apuestas.get(i)).getNumApuesta()
+                        + " Numeros: ");
+                for(int k = 0; k<((Quiniela)apuestas.get(i)).getPartidos().length;k++){
+                    System.out.print(((Quiniela)apuestas.get(i)).getPartidos()[k] + " ");
+                    if (k == ((Quiniela)apuestas.get(i)).getPartidos().length-1){
+                        System.out.println("\n");
+                    }
+                }
+            }
+        }
     }
     
 }

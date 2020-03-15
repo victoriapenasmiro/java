@@ -11,9 +11,18 @@ package practica6Ejercicio2;
  */
 public class ExceptionSimulador extends Exception{
     private String mensaje;
+    private int codError;
 
-    public ExceptionSimulador() {
-        this.setMensaje("el nombre debe estar en mayúsculas");
+    public ExceptionSimulador(int codError) {
+        if (codError == 101){
+            this.setMensaje("el nombre debe estar en mayúsculas. Intentalo de nuevo");
+        }
+        else if(codError == 102){
+            this.setMensaje("el apellido debe estar en mayúsculas. Intentalo de nuevo");         
+        }
+        else if(codError == 300){
+            this.setMensaje("El valor indicado no es válido. Intentalo de nuevo");         
+        }
     }
 
     public String getMensaje() {
@@ -23,6 +32,13 @@ public class ExceptionSimulador extends Exception{
     public void setMensaje(String mensaje) {
         this.mensaje = mensaje;
     }
-    
-    
+
+    public int getCodError() {
+        return codError;
+    }
+
+    public void setCodError(int codError) {
+        this.codError = codError;
+    }
+        
 }

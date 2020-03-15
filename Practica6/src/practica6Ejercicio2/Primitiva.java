@@ -5,6 +5,7 @@
  */
 package practica6Ejercicio2;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Scanner;
 
@@ -38,16 +39,18 @@ public class Primitiva extends Apuesta{
         this.listaNum = listaNum;
     }
 
-    public boolean validarNumero(int valor, int posicion) {
-        if(valor < 1 || valor>49){
+    public int validarNumero(int valor, int posicion) {
+        Scanner lector = new Scanner (System.in);
+        while (valor < 1 || valor>49){
             System.out.println("Los números de la primitiva deben estar comprendidos"
                     + " entre 1 y 49.");
-            return false;
+            valor = lector.nextInt();
         }
-        else{
+        if (valor >= 1 && valor <= 49){
             this.getListaNum()[posicion] = valor;
-            return true;
         }
+        
+        return valor;
     }
 
     public int getAciertos() {
@@ -65,53 +68,60 @@ public class Primitiva extends Apuesta{
     //To change body of generated methods, choose Tools | Templates.
     }
 
-    public static void crearApuestaPrimitiva(int totalApuestas) throws ExceptionSimulador{
+    public int [] crearApuestaPrimitiva() throws ExceptionSimulador{
         Scanner lector = new Scanner(System.in);
-        String nombre;
-        String apellido;
+        /*solo pido el nombre una vez, si el objeto que llama a esta función
+        ya existe, no le vuelvo a pedir su nombre*/
+        if (this.getNombre() == null){
+            super.pedirNombre();
+        }
         int valor = 0;
-        boolean resultado;
-        System.out.println("Dime tu nombre");
-        nombre = lector.nextLine();
-        System.out.println("Dime tu apellido");
-        apellido = lector.nextLine();
-
-        for (int i = 1;i<=totalApuestas;i++){
-            Primitiva nuevaPrim = new Primitiva();
-            nuevaPrim.setNombre(nombre);
-            nuevaPrim.setApellidos(apellido);
-
-            for (int j = 0; j<nuevaPrim.getListaNum().length; j++){
-                if (j == 0){
-                    System.out.println("Dime un numero para la apuesta: " + i);
-                    valor = lector.nextInt();
-                    resultado = nuevaPrim.validarNumero(valor, j);
-                    if (!resultado){
-                        resultado = nuevaPrim.comprobarResultado(valor, i, resultado);
-                    }
-                }
-                else{
-                    System.out.println("Dame otro para la apuesta: " + i);
-                    valor = lector.nextInt();
-                    resultado = nuevaPrim.validarNumero(valor, j);
-                    if(!resultado){
-                        resultado = nuevaPrim.comprobarResultado(valor, i, resultado);
-                    }
-                }
-            }/* Envio el valor, y la posicion para validar que cumple con la condicion */
-            
-            System.out.println(nuevaPrim.mostrarApuesta());
+        for (int j = 0; j<this.getListaNum().length; j++){
+            if (j == 0){
+                System.out.println("Dime un numero para la apuesta: ");
+                valor = this.validarNumero(lector.nextInt(), j);
+                /*compruebo que el numero esté entre 1 y 49, Envio el valor, y
+                la posicion para validar que cumple con la condicion */
+            }
+            else{
+                System.out.println("Dame otro para la apuesta: ");
+                valor = this.validarNumero(lector.nextInt(), (j));
+            }
         }
+        System.out.println("primitiva creada");
+        System.out.println(this.mostrarApuesta());
+        
+        return this.getListaNum();//devuelvo la primitiva
     }
     
-    public boolean comprobarResultado(int valor, int aux, boolean res){
-        Scanner lector = new Scanner(System.in);
-        while (res == false){
-            System.out.println("Dame un número valido para la apuesta: " + aux);
-            valor = lector.nextInt();
-            res = this.validarNumero(valor, aux);
-        }
-        return res;
+    //habia pensado en hacer un metodo abstract en Apuesta, pero como este metodo es static no puedo hacerlo.
+    public static int pedirCantidadPrimitivas(){
+        Scanner lector = new Scanner (System.in);
+        int totalPrimitivas;
+        totalPrimitivas = lector.nextInt();
+        return totalPrimitivas;
     }
     
+    //no puedo hacer abstract en la clase apuesta porque el tipo de dato guardado en la matriz es diferente para primitiva y quiniela
+    public boolean comprobarAciertos(ArrayList <int []> primitivasAleatorias, int [] apuesta){
+        boolean acierto = false;
+        int aux=0;//incremental while
+        int aux2;//incremental auxiliar
+        while (acierto == false && aux<primitivasAleatorias.size()){
+            aux2 = 0;
+            //mientras los valores coincidan ejecuta
+            while(primitivasAleatorias.get(aux)[aux2] == apuesta[aux2] && aux2<apuesta.length){
+                /*si nos encontramos en la ultima posicion de la array y los valores
+                son los mismos es que hay un acierto*/
+                if (primitivasAleatorias.get(aux).length-1 == aux2 && primitivasAleatorias.get(aux).length-1 == apuesta.length-1){
+                    acierto = true;
+                }
+                aux2++;
+            }
+            if(!acierto){
+                aux++;
+            }
+        }
+        return acierto;
+    }
 }
