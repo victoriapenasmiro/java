@@ -46,7 +46,7 @@ public abstract class Apuesta {
     }
 
     public void setNombre(String nombre) throws ExceptionSimulador {
-        if (nombre != nombre.toUpperCase()){  
+        if (!nombre.equals(nombre.toUpperCase())){  
             throw new ExceptionSimulador(101);
         }
         else{
@@ -59,7 +59,7 @@ public abstract class Apuesta {
     }
 
     public void setApellidos(String apellidos) throws ExceptionSimulador {
-        if (apellidos != apellidos.toUpperCase()){  
+        if (!apellidos.equals(apellidos.toUpperCase())){  
             throw new ExceptionSimulador(102);
         }
         else{
@@ -123,5 +123,5 @@ public abstract class Apuesta {
             }
         }
     }
-    
+    public abstract boolean comprobarAciertos(ArrayList <int []> quinielasAleatorias, int [] apuesta);
 }
