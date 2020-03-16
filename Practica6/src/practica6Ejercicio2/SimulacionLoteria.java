@@ -17,30 +17,12 @@ import java.util.Scanner;
  * 
  */
 public class SimulacionLoteria {
-    //ArrayList <int []> primitivasAleatorias = new ArrayList <int []> (); //Array de primitivas
-    //ArrayList <char []> quinielasAleatorias = new ArrayList <char []> (); //Array de quinielas
     ArrayList <int []> apuestasAleatorias = new ArrayList <int []> (); //Array de apuestas aleatorias
 
 
     public SimulacionLoteria() {
         super();
     }
-    /*
-    public ArrayList<int[]> getPrimitivasAleatorias() {
-        return primitivasAleatorias;
-    }
-
-    public void setPrimitivasAleatorias(ArrayList <int[]> primitivasAleatorias) {
-        this.primitivasAleatorias = primitivasAleatorias;
-    }
-
-    public ArrayList<char[]> getQuinielasAleatorias() {
-        return quinielasAleatorias;
-    }
-
-    public void setQuinielasAleatorias(ArrayList <char[]> quinielasAleatorias) {
-        this.quinielasAleatorias = quinielasAleatorias;
-    }*/
 
     public ArrayList<int[]> getApuestasAleatorias() {
         return apuestasAleatorias;
@@ -107,12 +89,11 @@ public class SimulacionLoteria {
     public void realizarSimulacion(int totalApuestas, char tipoApuesta) throws ExceptionSimulador{
         Scanner lector = new Scanner (System.in);
         Random r = new Random();
-        char [] valoresQuiniela = {'1','2','x'};
+        int [] valoresQuiniela = {1,2,0};
         boolean acierto = false;
         char verSorteos = 'N';
         int auxApuestas = 0; //auxiliar para calcular las apuestas que jugará el usuario
         int [] primitiva;
-        //char[] quiniela;
         int [] quiniela;
                 
         //genero las primitivas
@@ -145,16 +126,14 @@ public class SimulacionLoteria {
                     " primitivas de un total de:" + totalApuestas + " sorteos");
         }
         
+        //genero las quinielas aleatorias
         else if(totalApuestas > 0 && tipoApuesta == 'q'){
-            //genero las quinielas aleatorias
             for(int i = 0;i<totalApuestas;i++){
                 Quiniela quinielaAleatoria = new Quiniela();
-                //quinielaAleatoria.setPartidos(new char [15]);//instancio aqui porque no lo he hecho en el atributo
                 quinielaAleatoria.setPartidos(new int [15]);//instancio aqui porque no lo he hecho en el atributo
                 for(int j = 0; j<quinielaAleatoria.getPartidos().length;j++){
                     quinielaAleatoria.getPartidos()[j] = getRandom(valoresQuiniela);
                 }
-                //this.getQuinielasAleatorias().add(quinielaAleatoria.getPartidos());
                 this.getApuestasAleatorias().add(quinielaAleatoria.getPartidos());
             }
             
@@ -164,7 +143,6 @@ public class SimulacionLoteria {
             auxApuestas = lector.nextInt();
             for (int i = 0;i<auxApuestas;i++){
                 quiniela = quinielaUsuario.crearApuestaQuiniela();
-                //acierto = quinielaUsuario.comprobarAciertos(quinielasAleatorias, quiniela);
                 acierto = quinielaUsuario.comprobarAciertos(apuestasAleatorias, quiniela);
                 if(acierto){
                     quinielaUsuario.setAciertos(+1);
@@ -196,11 +174,10 @@ public class SimulacionLoteria {
                 }
             }
         }
-    }
-    
+    }    
     
     //Método para obtener una posicion de la array de valores posibles
-    public static char getRandom(char[] valoresQuiniela) {
+    public static int getRandom(int[] valoresQuiniela) {
         int rnd = new Random().nextInt(valoresQuiniela.length);
         return valoresQuiniela[rnd];
     }
@@ -212,7 +189,7 @@ public class SimulacionLoteria {
                 if(this.getApuestasAleatorias().get(i).length == 6){
                     System.out.print("\nPrimitiva " + (i+1) + ": ");
                     for (int j = 0; j<this.getApuestasAleatorias().get(i).length;j++){
-                    System.out.print(this.getApuestasAleatorias().get(i)[j] + " ");
+                        System.out.print(this.getApuestasAleatorias().get(i)[j] + " ");
                     }
                 }
             }
@@ -221,7 +198,12 @@ public class SimulacionLoteria {
                 if(this.getApuestasAleatorias().get(i).length == 15){
                     System.out.print("\nQuiniela " + (i+1) + ": ");
                     for (int j = 0; j<this.getApuestasAleatorias().get(i).length;j++){
-                    System.out.print(this.getApuestasAleatorias().get(i)[j] + " ");
+                        if (this.getApuestasAleatorias().get(i)[j] == 0){
+                            System.out.print("x" + " ");
+                        }
+                        else{
+                            System.out.print(this.getApuestasAleatorias().get(i)[j] + " ");
+                        }                        
                     }
                 }
             }
