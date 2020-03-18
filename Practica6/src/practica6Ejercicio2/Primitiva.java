@@ -68,13 +68,11 @@ public class Primitiva extends Apuesta{
     //To change body of generated methods, choose Tools | Templates.
     }
 
-    public int [] crearApuestaPrimitiva() throws ExceptionSimulador{
+    public Apuesta crearApuestaPrimitiva(ArrayList <Apuesta> apuestasUsuarios) throws ExceptionSimulador{
         Scanner lector = new Scanner(System.in);
         /*solo pido el nombre una vez, si el objeto que llama a esta función
         ya existe, no le vuelvo a pedir su nombre*/
-        if (this.getNombre() == null){
-            super.pedirNombre();
-        }
+        super.pedirNombre();
         int valor = 0;
         for (int j = 0; j<this.getListaNum().length; j++){
             if (j == 0){
@@ -91,7 +89,9 @@ public class Primitiva extends Apuesta{
         System.out.println("primitiva creada");
         System.out.println(this.mostrarApuesta());
         
-        return this.getListaNum();//devuelvo la primitiva
+        apuestasUsuarios.add(this);
+        
+        return this;//devuelvo el objeto
     }
     
     //habia pensado en hacer un metodo abstract en Apuesta, pero como este metodo es static no puedo hacerlo.
@@ -100,28 +100,5 @@ public class Primitiva extends Apuesta{
         int totalPrimitivas;
         totalPrimitivas = lector.nextInt();
         return totalPrimitivas;
-    }
-    
-    //no puedo hacer abstract en la clase apuesta porque el tipo de dato guardado en la matriz es diferente para primitiva y quiniela
-    public boolean comprobarAciertos(ArrayList <int []> primitivasAleatorias, int [] apuesta){
-        boolean acierto = false;
-        int aux=0;//incremental while
-        int aux2;//incremental auxiliar
-        while (acierto == false && aux<primitivasAleatorias.size()){
-            aux2 = 0;
-            //mientras los valores coincidan ejecuta
-            while(primitivasAleatorias.get(aux)[aux2] == apuesta[aux2] && aux2<apuesta.length){
-                /*si nos encontramos en la ultima posicion de la array y los valores
-                son los mismos es que hay un acierto*/
-                if (primitivasAleatorias.get(aux).length-1 == aux2 && primitivasAleatorias.get(aux).length-1 == apuesta.length-1){
-                    acierto = true;
-                }
-                aux2++;
-            }
-            if(!acierto){
-                aux++;
-            }
-        }
-        return acierto;
     }
 }

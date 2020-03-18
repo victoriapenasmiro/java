@@ -11,28 +11,16 @@ import java.util.Scanner;
 /**
  *
  * @author victoriapenas
- * Mejoras: como las quinielas y las primitivas son clases diferentes y
- * son dos instancias por seprada, pido el nombre y apellidos dos veces.
- * Estaría bien unificarlo a una.
  * 
  */
 public class SimulacionLoteria {
-    ArrayList <int []> apuestasAleatorias = new ArrayList <int []> (); //Array de apuestas aleatorias
-
 
     public SimulacionLoteria() {
         super();
     }
 
-    public ArrayList<int[]> getApuestasAleatorias() {
-        return apuestasAleatorias;
-    }
-
-    public void setApuestasAleatorias(ArrayList<int[]> apuestasAleatorias) {
-        this.apuestasAleatorias = apuestasAleatorias;
-    }
-      
-    public static void mostrarMenu() throws ExceptionSimulador{
+    public static void mostrarMenu(ArrayList <Apuesta> apuestasUsuarios, ArrayList <Apuesta> apuestasAleatorias)
+            throws ExceptionSimulador{
         Scanner lector = new Scanner(System.in);
         int opcion;
         int totalApuestas = 0;
@@ -52,14 +40,16 @@ public class SimulacionLoteria {
             }
             switch (opcion){
                 case 1:
-                    Primitiva nuevaPrim = new Primitiva();
                     for (int i= 0;i<totalApuestas;i++){
-                        nuevaPrim.crearApuestaPrimitiva();
+                        Primitiva nuevaPrim = new Primitiva();
+                        nuevaPrim.crearApuestaPrimitiva(apuestasUsuarios);
                     }
                     break;
                 case 2:
-                    Quiniela nuevaQuiniela = new Quiniela();
-                    nuevaQuiniela.crearApuestaQuiniela();
+                    for (int i= 0;i<totalApuestas;i++){
+                        Quiniela nuevaQuiniela = new Quiniela();
+                        nuevaQuiniela.crearApuestaQuiniela(apuestasUsuarios);
+                    }
                     break;
                 case 3:
                     SimulacionLoteria simulacion = new SimulacionLoteria();
@@ -67,14 +57,14 @@ public class SimulacionLoteria {
                     totalApuestas = Primitiva.pedirCantidadPrimitivas();
                     if (totalApuestas>0){
                         tipoApuesta = 'p';
-                        simulacion.realizarSimulacion(totalApuestas, tipoApuesta);
+                        simulacion.realizarSimulacion(totalApuestas, tipoApuesta, apuestasAleatorias, apuestasUsuarios);
                     }
                     
                     System.out.println("\n¿Cuántas quinielas quieres simular?");
                     totalApuestas = Quiniela.pedirCantidadQuinielas();
                     if (totalApuestas>0){
                         tipoApuesta = 'q';
-                        simulacion.realizarSimulacion(totalApuestas, tipoApuesta);
+                        simulacion.realizarSimulacion(totalApuestas, tipoApuesta, apuestasAleatorias, apuestasUsuarios);
                     }
                     break;
                 case 4:
@@ -86,16 +76,16 @@ public class SimulacionLoteria {
         } while (exit == false);
     }
     
-    public void realizarSimulacion(int totalApuestas, char tipoApuesta) throws ExceptionSimulador{
+    public void realizarSimulacion(int totalApuestas, char tipoApuesta, ArrayList <Apuesta> apuestasAleatorias, ArrayList <Apuesta> apuestasUsuarios)
+            throws ExceptionSimulador{
         Scanner lector = new Scanner (System.in);
         Random r = new Random();
         int [] valoresQuiniela = {1,2,0};
-        boolean acierto = false;
-        char verSorteos = 'N';
-        int auxApuestas = 0; //auxiliar para calcular las apuestas que jugará el usuario
-        int [] primitiva;
-        int [] quiniela;
-                
+        boolean acierto = false;//auxiliar para actualizar los aciertos
+        int aciertosPrimitivas = 0;
+        int aciertosQuinielas = 0;
+        char verSorteos = 'N';// la inicializo en NO        
+        
         //genero las primitivas
         if (totalApuestas > 0 && tipoApuesta == 'p'){
             //genero apuestas aleatorias
@@ -104,26 +94,19 @@ public class SimulacionLoteria {
                 for(int j = 0; j<primitivaAleatoria.getListaNum().length;j++){
                     primitivaAleatoria.getListaNum()[j] = r.nextInt(49)+1;//genero enteros entre 1 y 49:
                 }
-                //this.getPrimitivasAleatorias().add(primitivaAleatoria.getListaNum());
-                this.getApuestasAleatorias().add(primitivaAleatoria.getListaNum());
-            }
-            
-            //genero apuestas manuales del usuario
-            System.out.println("¿Cuántas primitivas quieres probar?");
-            Primitiva primitivaUsuario = new Primitiva();
-            auxApuestas = lector.nextInt();
-            for (int i = 0;i<auxApuestas;i++){
-                primitiva = primitivaUsuario.crearApuestaPrimitiva();
-                //acierto = primitivaUsuario.comprobarAciertos(primitivasAleatorias,primitiva);
-                acierto = primitivaUsuario.comprobarAciertos(apuestasAleatorias,primitiva);
+                //añado la apuesta a la array
+                apuestasAleatorias.add(primitivaAleatoria);
+                
+                //compruebo si esta apuesta la ha acertado el usuario
+                acierto = primitivaAleatoria.comprobarAciertos(apuestasUsuarios, primitivaAleatoria.getListaNum());
                 if(acierto){
-                    primitivaUsuario.setAciertos(+1);
+                    aciertosPrimitivas +=1;
                 }
             }
             
-            //imprimo estadísticas
-            System.out.println("Has acertado " + primitivaUsuario.getAciertos() +
-                    " primitivas de un total de:" + totalApuestas + " sorteos");
+            //imprimo aciertos
+            System.out.println("Has acertado " + aciertosPrimitivas +
+                    " primitivas de un total de:" + totalApuestas + " sorteos generados.");
         }
         
         //genero las quinielas aleatorias
@@ -134,24 +117,18 @@ public class SimulacionLoteria {
                 for(int j = 0; j<quinielaAleatoria.getPartidos().length;j++){
                     quinielaAleatoria.getPartidos()[j] = getRandom(valoresQuiniela);
                 }
-                this.getApuestasAleatorias().add(quinielaAleatoria.getPartidos());
-            }
-            
-            //genero apuestas manuales del usuario
-            System.out.println("¿Cuántas quinielas quieres probar?");
-            Quiniela quinielaUsuario = new Quiniela();
-            auxApuestas = lector.nextInt();
-            for (int i = 0;i<auxApuestas;i++){
-                quiniela = quinielaUsuario.crearApuestaQuiniela();
-                acierto = quinielaUsuario.comprobarAciertos(apuestasAleatorias, quiniela);
+                
+                apuestasAleatorias.add(quinielaAleatoria);
+                //compruebo si esta apuesta la ha acertado el usuario
+                acierto = quinielaAleatoria.comprobarAciertos(apuestasUsuarios, quinielaAleatoria.getPartidos());
                 if(acierto){
-                    quinielaUsuario.setAciertos(+1);
+                    aciertosQuinielas +=1;
                 }
             }
-            
-            //imprimo estadísticas
-            System.out.println("Has acertado " + quinielaUsuario.getAciertos() +
-                    " primitivas de un total de:" + totalApuestas + " sorteos");
+
+            //imprimo aciertos
+            System.out.println("Has acertado " + aciertosQuinielas +
+                    " primitivas de un total de:" + totalApuestas + " sorteos generados.");
         }        
         
         try{
@@ -159,7 +136,7 @@ public class SimulacionLoteria {
             verSorteos = lector.next().charAt(0);
             if(verSorteos == 'Y' || verSorteos == 'y'){
                 System.out.println("Las apuestas aleatorias que se han generado son:"); 
-                this.mostrarApuestas(tipoApuesta); //Por último imprimo todas las apuestas aleatorias que se han generado
+                mostrarApuestas(apuestasAleatorias); //Por último imprimo todas las apuestas aleatorias que se han generado
             }
             else if (verSorteos != 'N' && verSorteos != 'n'){
                 throw new ExceptionSimulador(300);
@@ -170,7 +147,7 @@ public class SimulacionLoteria {
                 verSorteos = lector.next().charAt(0);
                 if(verSorteos == 'Y' || verSorteos == 'y'){
                     System.out.println("Las apuestas aleatorias que se han generado son:"); 
-                    this.mostrarApuestas(tipoApuesta); //Por último imprimo todas las apuestas aleatorias que se han generado
+                    mostrarApuestas(apuestasAleatorias); //Por último imprimo todas las apuestas aleatorias que se han generado
                 }
             }
         }
@@ -182,31 +159,53 @@ public class SimulacionLoteria {
         return valoresQuiniela[rnd];
     }
    
-    public void mostrarApuestas(char tipoApuesta){
-        for (int i=0;i<this.getApuestasAleatorias().size();i++){
-            if (tipoApuesta == 'p'){
-                //solo imprimo primitivas
-                if(this.getApuestasAleatorias().get(i).length == 6){
-                    System.out.print("\nPrimitiva " + (i+1) + ": ");
-                    for (int j = 0; j<this.getApuestasAleatorias().get(i).length;j++){
-                        System.out.print(this.getApuestasAleatorias().get(i)[j] + " ");
+    public static void mostrarApuestas(ArrayList <Apuesta> apuestasAleatorias){
+        /*con estas variables imprimire un texto una sola vez por todas las
+        primitivas o quinielas que haya*/
+        boolean hayPrimitivas = false;
+        boolean hayQuinielas = false;
+        for(int i = 0;i<apuestasAleatorias.size();i++){
+            if (apuestasAleatorias.get(i) instanceof Primitiva){
+                if (hayPrimitivas == false){
+                    System.out.println("Las Primitivas que se han generado son: ");
+                    hayPrimitivas = true;
+                }
+                for(int j = 0;j<((Primitiva)apuestasAleatorias.get(i)).getListaNum().length;j++){
+                    if (j == ((Primitiva)apuestasAleatorias.get(i)).getListaNum().length-1){
+                        System.out.println (((Primitiva)apuestasAleatorias.get(i)).getListaNum()[j] + " ");
+                    }
+                    else{
+                        System.out.print(((Primitiva)apuestasAleatorias.get(i)).getListaNum()[j] + " ");
+                        
                     }
                 }
             }
-            else{
-                //solo imprimo quinielas
-                if(this.getApuestasAleatorias().get(i).length == 15){
-                    System.out.print("\nQuiniela " + (i+1) + ": ");
-                    for (int j = 0; j<this.getApuestasAleatorias().get(i).length;j++){
-                        if (this.getApuestasAleatorias().get(i)[j] == 0){
-                            System.out.print("x" + " ");
+            
+            else if(apuestasAleatorias.get(i) instanceof Quiniela){
+                if (hayQuinielas == false){
+                    System.out.println("Las Quinielas que se han generado son: ");
+                    hayQuinielas = true;
+                }
+                for(int j = 0;j<((Quiniela)apuestasAleatorias.get(i)).getPartidos().length;j++){
+                    if(j == ((Quiniela)apuestasAleatorias.get(i)).getPartidos().length-1){
+                        if(((Quiniela)apuestasAleatorias.get(i)).getPartidos()[j] == 0){
+                            System.out.println("x ");
                         }
                         else{
-                            System.out.print(this.getApuestasAleatorias().get(i)[j] + " ");
-                        }                        
+                            System.out.println(((Quiniela)apuestasAleatorias.get(i)).getPartidos()[j] + " ");
+                        }
+                    }
+                    else{
+                        if(((Quiniela)apuestasAleatorias.get(i)).getPartidos()[j] == 0){
+                            System.out.print("x ");
+                        }
+                        else{
+                            System.out.print(((Quiniela)apuestasAleatorias.get(i)).getPartidos()[j] + " ");
+                        }
                     }
                 }
             }
+            
         }
     }    
 }

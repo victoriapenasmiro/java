@@ -5,6 +5,8 @@
  */
 package practica6Ejercicio2;
 
+import java.util.ArrayList;
+
 /**
  *
  * @author victoriapenas
@@ -12,8 +14,15 @@ package practica6Ejercicio2;
 public class Simulador {
     
     public static void main(String[] args) {
+        
+        //ArrayList de sorteos aleatorios
+        ArrayList <Apuesta> apuestasAleatorias = new ArrayList();
+        
+        //ArrayList de sorteos de usuarios
+        ArrayList <Apuesta> apuestasUsuarios = new ArrayList();
+        
         try {
-            SimulacionLoteria.mostrarMenu();
+            SimulacionLoteria.mostrarMenu(apuestasUsuarios, apuestasAleatorias);
         } catch (ExceptionSimulador ex) {
             System.out.println(ex.getMensaje());
         }       

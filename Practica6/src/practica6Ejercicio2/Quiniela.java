@@ -52,7 +52,8 @@ public class Quiniela extends Apuesta{
         this.aciertos = aciertos;
     }
     
-    public int [] crearApuestaQuiniela() throws ExceptionSimulador{
+    public Apuesta crearApuestaQuiniela(ArrayList <Apuesta> apuestasUsuarios)
+            throws ExceptionSimulador{
         Scanner lector = new Scanner(System.in);
         char valor = 0; //la inicializo vacía
         int valorCorrecto;
@@ -64,6 +65,7 @@ public class Quiniela extends Apuesta{
         this.setPartidos(new int [15]);
         for (int j = 0;j<this.getPartidos().length;j++){
             System.out.println("Dame un valor para el partido: " + (j+1));
+            //leo char para que el usuario me indique los empates con 'x' pero almaceno int.
             valor = lector.next().charAt(0);
             valorCorrecto = verificarValor(valor);
             while (valorCorrecto == 3){
@@ -75,7 +77,7 @@ public class Quiniela extends Apuesta{
         }
         System.out.println(this.mostrarApuesta());
         
-        return this.getPartidos();
+        return this;
     }
     
     public static int verificarValor(char valor){
@@ -109,28 +111,5 @@ public class Quiniela extends Apuesta{
         int totalQuinielas;
         totalQuinielas = lector.nextInt();
         return totalQuinielas;
-    }
-    
-    public boolean comprobarAciertos(ArrayList <int []> quinielasAleatorias, int [] apuesta){
-        boolean acierto = false;
-        int aux=0;//incremental while
-        int aux2;//incremental auxiliar
-        while (acierto == false && aux<quinielasAleatorias.size()){
-            aux2 = 0;
-            //mientras los valores coincidan ejecuta
-            while(quinielasAleatorias.get(aux)[aux2] == apuesta[aux2] && aux2<apuesta.length){
-                /*si nos encontramos en la ultima posicion de la array y los valores
-                son los mismos es que hay un acierto*/
-                if (quinielasAleatorias.get(aux).length-1 == aux2 && quinielasAleatorias.get(aux).length-1 == apuesta.length-1){
-                    acierto = true;
-                }
-                aux2++;
-            }
-            if(!acierto){
-                aux++;
-            }
-        }
-        return acierto;
-    }
-        
+    }        
 }

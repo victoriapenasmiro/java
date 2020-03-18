@@ -95,33 +95,45 @@ public abstract class Apuesta {
         return this;
     }
     
-    //he cambiado el programa y no voy a usar este metodo, lo mantengo como ejemplo
-    public static void imprimirApuestas(ArrayList <Apuesta> apuestas){
-        System.out.println("A continuación se muestran todas las apuestas:\n");
-        for (int i=0;i<apuestas.size();i++){
-            if(apuestas.get(i) instanceof Primitiva){
-                System.out.print("Primitiva: ");
-                System.out.print("Num: " + ((Primitiva)apuestas.get(i)).getNumApuesta()
-                        + " Numeros: ");
-                for(int j = 0; j<((Primitiva)apuestas.get(i)).getListaNum().length;j++){
-                    System.out.print(((Primitiva)apuestas.get(i)).getListaNum()[j] + " ");
-                    if (j == ((Primitiva)apuestas.get(i)).getListaNum().length-1){
-                        System.out.println("\n");
+    public boolean comprobarAciertos(ArrayList <Apuesta> apuestasUsuario, int [] apuesta){
+        boolean acierto = false;
+        boolean salir = false;
+        int aux;//incremental while
+        for (int i = 0; i<apuestasUsuario.size();i++){
+            aux = 0;//reseteo el contador en cada comienzo
+            salir = false;//reseteo la auxiliar para la nueva apuesta
+            if(apuestasUsuario.get(i) instanceof Primitiva){
+                while (salir == false && ((Primitiva)apuestasUsuario.get(i)).getListaNum()[aux] == apuesta[aux]
+                    && aux<((Primitiva)apuestasUsuario.get(i)).getListaNum().length){
+                
+                    if (((Primitiva)apuestasUsuario.get(i)).getListaNum().length-1 == aux){
+                        //Si llego a la última posicion es que todos los números coinciden. Actualizo lo aciertos
+                        ((Primitiva)apuestasUsuario.get(i)).setAciertos(((Primitiva)apuestasUsuario.get(i)).getAciertos() + 1);
+                        acierto = true;
+                        salir = true;
+                    }
+                    else{
+                        aux++;
                     }
                 }
             }
-            else{
-                System.out.print("Quiniela: ");
-                System.out.print("Num: " + ((Quiniela)apuestas.get(i)).getNumApuesta()
-                        + " Numeros: ");
-                for(int k = 0; k<((Quiniela)apuestas.get(i)).getPartidos().length;k++){
-                    System.out.print(((Quiniela)apuestas.get(i)).getPartidos()[k] + " ");
-                    if (k == ((Quiniela)apuestas.get(i)).getPartidos().length-1){
-                        System.out.println("\n");
+            else if(apuestasUsuario.get(i) instanceof Quiniela){
+                while (salir == false && ((Quiniela)apuestasUsuario.get(i)).getPartidos()[aux] == apuesta[aux]
+                    && aux<((Quiniela)apuestasUsuario.get(i)).getPartidos().length){
+                
+                    if (((Quiniela)apuestasUsuario.get(i)).getPartidos().length-1 == aux){
+                        //Si llego a la última posicion es que todos los números coinciden. Actualizo lo aciertos
+                        ((Quiniela)apuestasUsuario.get(i)).setAciertos(((Quiniela)apuestasUsuario.get(i)).getAciertos() + 1);
+                        acierto = true;
+                        salir = true;
+                    }
+                    else{
+                        aux++;
                     }
                 }
             }
         }
+        return acierto;
+    
     }
-    public abstract boolean comprobarAciertos(ArrayList <int []> quinielasAleatorias, int [] apuesta);
 }
