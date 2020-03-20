@@ -7,6 +7,7 @@ package practica6Ejercicio2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -17,6 +18,7 @@ public class Quiniela extends Apuesta{
     private final int COLUMNAS = 15;
     private int partidos [];
     private int aciertos = 0;
+    private static final int [] valoresQuiniela = {1,2,0};
 
     public Quiniela() {
         super();
@@ -51,7 +53,16 @@ public class Quiniela extends Apuesta{
     public void setAciertos(int aciertos) {
         this.aciertos = aciertos;
     }
+
+    public int getCOLUMNAS() {
+        return COLUMNAS;
+    }
+
+    public static int[] getValoresQuiniela() {
+        return valoresQuiniela;
+    }
     
+       
     public Apuesta crearApuestaQuiniela(ArrayList <Apuesta> apuestasUsuarios)
             throws ExceptionSimulador{
         Scanner lector = new Scanner(System.in);
@@ -111,5 +122,22 @@ public class Quiniela extends Apuesta{
         int totalQuinielas;
         totalQuinielas = lector.nextInt();
         return totalQuinielas;
-    }        
+    }
+    
+    public Quiniela generarQuinielasAleatorias(ArrayList <Apuesta> apuestasAleatorias){
+        this.setPartidos(new int [15]);//instancio aqui porque no lo he hecho en el atributo
+        for(int j = 0; j<this.getPartidos().length;j++){
+            this.getPartidos()[j] = getRandom();
+        }
+        //añado la quiniela a la lista de apuestas aleatorias
+        apuestasAleatorias.add(this);
+        
+        return this;
+    }
+    
+    //Método para obtener una posicion de la array de valores posibles
+    public static int getRandom() {
+        int rnd = new Random().nextInt(getValoresQuiniela().length);
+        return getValoresQuiniela()[rnd];
+    }
 }

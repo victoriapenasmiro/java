@@ -7,6 +7,7 @@ package practica6Ejercicio2;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -100,5 +101,16 @@ public class Primitiva extends Apuesta{
         int totalPrimitivas;
         totalPrimitivas = lector.nextInt();
         return totalPrimitivas;
+    }
+    
+    public Primitiva generarPrimitivasAleatorias(ArrayList <Apuesta> apuestasAleatorias){
+        Random r = new Random();
+        for(int j = 0; j<this.getListaNum().length;j++){
+            this.getListaNum()[j] = r.nextInt(49)+1;//genero enteros entre 1 y 49:
+        }
+        //añado la apuesta a la arrayList de apuestas aleatorias
+        apuestasAleatorias.add(this);
+        
+        return this;
     }
 }

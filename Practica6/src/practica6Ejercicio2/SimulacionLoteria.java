@@ -76,88 +76,43 @@ public class SimulacionLoteria {
         } while (exit == false);
     }
     
-    public void realizarSimulacion(int totalApuestas, char tipoApuesta, ArrayList <Apuesta> apuestasAleatorias, ArrayList <Apuesta> apuestasUsuarios)
+    public void realizarSimulacion(int totalApuestas, char tipoApuesta,
+            ArrayList <Apuesta> apuestasAleatorias, ArrayList <Apuesta> apuestasUsuarios)
             throws ExceptionSimulador{
-        Scanner lector = new Scanner (System.in);
-        Random r = new Random();
-        int [] valoresQuiniela = {1,2,0};
         boolean acierto = false;//auxiliar para actualizar los aciertos
-        int aciertosPrimitivas = 0;
-        int aciertosQuinielas = 0;
-        char verSorteos = 'N';// la inicializo en NO        
+        int aciertos = 0;  
         
         //genero las primitivas
         if (totalApuestas > 0 && tipoApuesta == 'p'){
             //genero apuestas aleatorias
             for(int i = 0;i<totalApuestas;i++){
                 Primitiva primitivaAleatoria = new Primitiva();
-                for(int j = 0; j<primitivaAleatoria.getListaNum().length;j++){
-                    primitivaAleatoria.getListaNum()[j] = r.nextInt(49)+1;//genero enteros entre 1 y 49:
-                }
-                //añado la apuesta a la array
-                apuestasAleatorias.add(primitivaAleatoria);
+                primitivaAleatoria = primitivaAleatoria.generarPrimitivasAleatorias(apuestasAleatorias);
                 
                 //compruebo si esta apuesta la ha acertado el usuario
                 acierto = primitivaAleatoria.comprobarAciertos(apuestasUsuarios, primitivaAleatoria.getListaNum());
                 if(acierto){
-                    aciertosPrimitivas +=1;
+                    aciertos +=1;
                 }
             }
-            
-            //imprimo aciertos
-            System.out.println("Has acertado " + aciertosPrimitivas +
-                    " primitivas de un total de:" + totalApuestas + " sorteos generados.");
         }
-        
         //genero las quinielas aleatorias
         else if(totalApuestas > 0 && tipoApuesta == 'q'){
             for(int i = 0;i<totalApuestas;i++){
                 Quiniela quinielaAleatoria = new Quiniela();
-                quinielaAleatoria.setPartidos(new int [15]);//instancio aqui porque no lo he hecho en el atributo
-                for(int j = 0; j<quinielaAleatoria.getPartidos().length;j++){
-                    quinielaAleatoria.getPartidos()[j] = getRandom(valoresQuiniela);
-                }
-                
-                apuestasAleatorias.add(quinielaAleatoria);
+                quinielaAleatoria = quinielaAleatoria.generarQuinielasAleatorias(apuestasAleatorias);               
                 //compruebo si esta apuesta la ha acertado el usuario
                 acierto = quinielaAleatoria.comprobarAciertos(apuestasUsuarios, quinielaAleatoria.getPartidos());
                 if(acierto){
-                    aciertosQuinielas +=1;
-                }
-            }
-
-            //imprimo aciertos
-            System.out.println("Has acertado " + aciertosQuinielas +
-                    " primitivas de un total de:" + totalApuestas + " sorteos generados.");
-        }        
-        
-        try{
-            System.out.println("¿Quieres visualizar los sorteos aleatorios que se han generado? Y/N ");
-            verSorteos = lector.next().charAt(0);
-            if(verSorteos == 'Y' || verSorteos == 'y'){
-                System.out.println("Las apuestas aleatorias que se han generado son:"); 
-                mostrarApuestas(apuestasAleatorias); //Por último imprimo todas las apuestas aleatorias que se han generado
-            }
-            else if (verSorteos != 'N' && verSorteos != 'n'){
-                throw new ExceptionSimulador(300);
-            }
-        }catch (ExceptionSimulador e){
-            while(verSorteos != 'Y' && verSorteos != 'y' && verSorteos != 'N' && verSorteos != 'n'){
-                System.out.println(e.getMensaje());
-                verSorteos = lector.next().charAt(0);
-                if(verSorteos == 'Y' || verSorteos == 'y'){
-                    System.out.println("Las apuestas aleatorias que se han generado son:"); 
-                    mostrarApuestas(apuestasAleatorias); //Por último imprimo todas las apuestas aleatorias que se han generado
+                    aciertos +=1;
                 }
             }
         }
+        //imprimo los aciertos del usuario
+        imprimirAciertos(aciertos, totalApuestas,tipoApuesta);
+        //pregunto al usuaio si quieren ver las apuestas aleatorias que se han generado
+        visualizarApuestasAleatorias(apuestasAleatorias);
     }    
-    
-    //Método para obtener una posicion de la array de valores posibles
-    public static int getRandom(int[] valoresQuiniela) {
-        int rnd = new Random().nextInt(valoresQuiniela.length);
-        return valoresQuiniela[rnd];
-    }
    
     public static void mostrarApuestas(ArrayList <Apuesta> apuestasAleatorias){
         /*con estas variables imprimire un texto una sola vez por todas las
@@ -176,7 +131,6 @@ public class SimulacionLoteria {
                     }
                     else{
                         System.out.print(((Primitiva)apuestasAleatorias.get(i)).getListaNum()[j] + " ");
-                        
                     }
                 }
             }
@@ -205,7 +159,40 @@ public class SimulacionLoteria {
                     }
                 }
             }
-            
         }
-    }    
+    }
+    
+    public void imprimirAciertos(int aciertos, int totalApuestas, char tipo){
+        System.out.print("Has acertado " + aciertos);
+        if(tipo == 'p'){
+            System.out.print("Primitivas ");
+        }
+        else if(tipo == 'q'){
+            System.out.println("Quinielas");
+        }
+        System.out.println("de un total de: " + totalApuestas + " sorteos generados.");
+    }
+    
+    public void visualizarApuestasAleatorias(ArrayList <Apuesta> apuestasAleatorias){
+        Scanner lector = new Scanner (System.in);
+        char verSorteos = 'N';// la inicializo en NO   
+        try{
+            System.out.println("¿Quieres visualizar los sorteos aleatorios que se han generado? Y/N ");
+            verSorteos = lector.next().charAt(0);
+            if(verSorteos == 'Y' || verSorteos == 'y'){
+                mostrarApuestas(apuestasAleatorias); //Por último imprimo todas las apuestas aleatorias que se han generado
+            }
+            else if (verSorteos != 'N' && verSorteos != 'n'){
+                throw new ExceptionSimulador(300);
+            }
+        }catch (ExceptionSimulador e){
+            while(verSorteos != 'Y' && verSorteos != 'y' && verSorteos != 'N' && verSorteos != 'n'){
+                System.out.println(e.getMensaje());
+                verSorteos = lector.next().charAt(0);
+                if(verSorteos == 'Y' || verSorteos == 'y'){
+                    mostrarApuestas(apuestasAleatorias); //Por último imprimo todas las apuestas aleatorias que se han generado
+                }
+            }
+        }
+    }
 }
