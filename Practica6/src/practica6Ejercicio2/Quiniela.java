@@ -18,7 +18,7 @@ public class Quiniela extends Apuesta{
     private final int COLUMNAS = 15;
     private int partidos [];
     private int aciertos = 0;
-    private static final int [] valoresQuiniela = {1,2,0};
+    private static final int [] VALORESQUINIELA = {1,2,0};
 
     public Quiniela() {
         super();
@@ -58,10 +58,9 @@ public class Quiniela extends Apuesta{
         return COLUMNAS;
     }
 
-    public static int[] getValoresQuiniela() {
-        return valoresQuiniela;
-    }
-    
+    public static int[] getVALORESQUINIELA() {
+        return VALORESQUINIELA;
+    }    
        
     public Apuesta crearApuestaQuiniela(ArrayList <Apuesta> apuestasUsuarios)
             throws ExceptionSimulador{
@@ -137,7 +136,7 @@ public class Quiniela extends Apuesta{
     
     //Método para obtener una posicion de la array de valores posibles
     public static int getRandom() {
-        int rnd = new Random().nextInt(getValoresQuiniela().length);
-        return getValoresQuiniela()[rnd];
+        int rnd = new Random().nextInt(getVALORESQUINIELA().length);
+        return getVALORESQUINIELA()[rnd];
     }
 }
