@@ -272,7 +272,7 @@ public class Pelicula {
                 break;
             case 5:
                 for (int i=0;i<peliculas.size();i++){
-                    //convierto el año a string para poder usar uel método contains
+                    //convierto el año a string para poder usar el método contains
                     if (String.valueOf(peliculas.get(i).getDuracion()).contains(texto)){
                         pelisEncontradas.add(peliculas.get(i));
                     }

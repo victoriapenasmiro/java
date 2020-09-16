@@ -18,16 +18,14 @@ public class Cliente {
     private String nombre;
     private String apellidos;
     private int telefono;
-    private ArrayList <Pelicula> peliculasReservadas = new ArrayList <Pelicula>();
+    private final ArrayList <Pelicula> peliculasReservadas = new ArrayList <Pelicula>(); //pongo final para que la instancia NO SE PUEDA MODIFICAR
 
-    public Cliente(int codCliente, String password, String nombre,
-            String apellidos, int telefono, ArrayList <Pelicula> peliculasReservadas) {
-        this.setCodCliente(codCliente);
-        this.setPassword(password);
-        this.setNombre(nombre);
-        this.setApellidos(apellidos);
-        this.setTelefono(telefono);
-        this.setPeliculasReservadas(peliculasReservadas);
+    public Cliente(int codCliente, String password, String nombre, String apellidos, int telefono) {
+        this.codCliente = codCliente;
+        this.password = password;
+        this.nombre = nombre;
+        this.apellidos = apellidos;
+        this.telefono = telefono;
     }
 
     public Cliente() {
@@ -39,7 +37,6 @@ public class Cliente {
         this.setNombre(cliente.nombre);
         this.setApellidos(cliente.apellidos);
         this.setTelefono(cliente.telefono);
-        this.setPeliculasReservadas(cliente.peliculasReservadas);
     }
 
     public int getCodCliente() {
@@ -85,10 +82,6 @@ public class Cliente {
     public ArrayList<Pelicula> getPeliculasReservadas() {
         return peliculasReservadas;
     }
-
-    public void setPeliculasReservadas(ArrayList <Pelicula> peliculasReservadas) {
-        this.peliculasReservadas = peliculasReservadas;
-    }    
 
     public static void altaCliente(ArrayList <Cliente> clientes){
         Scanner lector = new Scanner(System.in);

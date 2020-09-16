@@ -22,6 +22,7 @@ public class Vehiculo {
 
     //constructor vacio
     public Vehiculo() {
+        this.setId(id);
     }
     
     //constructor con parametros
@@ -47,7 +48,8 @@ public class Vehiculo {
 
     public void setId(int id) {
         this.id = id;
-    }
+    } 
+
 
     public String getMatricula() {
         return matricula;

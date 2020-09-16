@@ -68,5 +68,6 @@ public class Autobus extends Vehiculo{
         System.out.println("Dime el número de plazas");
         this.setPlazas(lector.nextInt());
         return this;
-    }
+    }    
+    
 }

@@ -90,7 +90,8 @@ public class Practica5 {
             switch (opcion) {
                 case 1:
                     for (int i=0; i<empleados.size();i++){
-                        if(empleados.get(i) instanceof Empleado){
+                        if(!(empleados.get(i) instanceof Comercial) &&
+                            !(empleados.get(i) instanceof Repartidor)){
                             empleados.get(i).mostrarAtributos();
                         }
                     }   break;
